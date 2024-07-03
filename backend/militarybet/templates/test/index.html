@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="{% static '/css/test/index.css' %}" rel="stylesheet">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<div class="cards">
+  {% for item in name %}
+  <div class="card">
+  <div class="card__top">
+    <a href="#" class="card__image">
+      <img src="{% static 'imgs/icons/logout.png' %}" alt="Apple IPhone 14 PRO Max Gold"/>
+    </a>
+    <div class="card__label">{{ item.sale }}</div>
+  </div>
+  <div class="card__bottom">
+    <div class="card__prices">
+      <div class="card__price card__price--discount">{{ item.price1 }}</div>
+      <div class="card__price card__price--common">{{ item.price2 }}</div>
+    </div>
+    <a href="#" class="card__title">{{ item.title }}</a>
+    <button class="card__add">В корзину</button>
+      <p></p>
+  </div>
+</div>
+  {% endfor %}
+
+</div>
+
+
+
+</body>
+</html>

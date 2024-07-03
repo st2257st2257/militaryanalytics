@@ -1,0 +1,69 @@
+ @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: poppins;
+}
+#header-img {
+  height: 30vh;
+  background: url(static/imgs/israel_iran_wall_Zoonar_Alamy.jpg);
+  background-size: cover;
+  position: relative;
+  z-index: 1;
+  background-attachment: fixed;
+  color: #fff;
+  display: flex;
+  align-items: flex-end;
+}
+#header-img h1 {
+  margin: 12px 4px;
+  font-size: 42px;
+}
+#nav-bar {
+  list-style-type: none;
+  background: #183a74;
+  position: sticky;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+#nav-bar li {
+  display: inline-block;
+  transition: 0.6s;
+}
+#nav-bar li a {
+  color: #fff;
+  text-decoration: none;
+  padding: 12px;
+  display: inline-block;
+}
+#nav-bar li:hover {
+  background: #000;
+}
+#content {
+  padding: 32px;
+  color: #333;
+}
+.channel
+{
+    box-sizing: border-box;
+    background: #f00;
+    font-family: monospace;
+    color: #fff;
+    bottom: 0px;
+    font-weight: bold;
+    font-size: 18px;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    position: fixed;
+    padding: 5px 20px;
+    animation: animate 1s linear infinite;
+}
+@keyframes animate {
+    0%, 100% { color: #fff; }
+    50% { color: #f00; }
+}
