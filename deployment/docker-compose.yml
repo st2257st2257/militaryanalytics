@@ -3,7 +3,7 @@ version: "3.9"
 services:
   back:
     build:
-      context: ../backend/militaryanalytics/
+      context: ../backend/militarybet/
       dockerfile: Dockerfile
     environment:
       - DJANGO_DEBUG=True
@@ -16,7 +16,7 @@ services:
     ports:
       - "80:8080"
     volumes:
-      - ../backend/militaryanalytics:/usr/src/app
+      - ../backend/militarybet:/usr/src/app
 
 networks:
   naletay:
