@@ -55,14 +55,14 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    os.getenv('DJANGO_FRONTEND_URL', 'http://localhost:8000'),
-    os.getenv('DJANGO_FRONTEND_URL', 'http://localhost'),
-    os.getenv('DJANGO_FRONTEND_URL', 'http://127.0.0.1:8000'),
-    os.getenv('DJANGO_FRONTEND_URL', 'http://127.0.0.1'),
+    #os.getenv('DJANGO_FRONTEND_URL', 'http://localhost:8000'),
+    #os.getenv('DJANGO_FRONTEND_URL', 'http://localhost'),
+    #os.getenv('DJANGO_FRONTEND_URL', 'http://127.0.0.1:8000'),
+    #os.getenv('DJANGO_FRONTEND_URL', 'http://127.0.0.1'),
     #os.getenv('DJANGO_FRONTEND_URL', 'http://127.0.0.1:5070'),
     #os.getenv('DJANGO_FRONTEND_URL', 'http://localhost:5077'),
     #os.getenv('DJANGO_FRONTEND_URL', 'http://192.168.1.70:5070'),
-    os.getenv('DJANGO_FRONTEND_URL', 'http://46.138.245.249:5080'),
+    #os.getenv('DJANGO_FRONTEND_URL', 'http://46.138.245.249:5080'),
 ]
 
 ROOT_URLCONF = 'militarybet.urls'
