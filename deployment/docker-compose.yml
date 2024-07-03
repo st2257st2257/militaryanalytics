@@ -19,5 +19,5 @@ services:
       - ../backend/militarybet:/usr/src/app
 
 networks:
-  naletay:
+  military:
     name: military
