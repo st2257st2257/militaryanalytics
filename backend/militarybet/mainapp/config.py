@@ -24,13 +24,15 @@ host = socket.gethostbyname(socket.gethostname())
 urlAdress = "https://" + host + ":50" + str(host)[-2:]
 urlAddressGlobal = ""
 codeIP = str(host)[-2:]
-if int(codeIP) < 10:
+
+if int(100) < 10:
     urlAddressGlobal = "https://proreef.ru:8000"
 else:
     if deploy:
         urlAddressGlobal = "https://46.138.245.249:50"
     else:
         urlAddressGlobal = "https://192.168.1." + codeIP + ":50" + codeIP
+
 print("Url Global: ", urlAddressGlobal)
 urlBase = "https://127.0.0.1:8000"
 print("Url Local: ", urlBase)
