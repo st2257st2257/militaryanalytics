@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+{{ form.errors  }}
+
+
+
+ <div class="login">
+    <div class="login-screen">
+      <div class="app-title">
+        <h1>Registration</h1>
+      </div>
+
+      <form action="{% url 'users:registration' %}" method="post">
+        {{ form.errors }}
+      <div class="login-form">
+
+        <div class="control-group">
+          {{ form.username }}
+        <label class="login-field-icon fui-user" for="login-name"></label>
+        </div>
+
+        <div class="control-group">
+          {{ form.password1 }}
+        <label class="login-field-icon fui-lock" for="login-pass"></label>
+        </div>
+
+
+          <div class="control-group">
+          {{ form.password2 }}
+        <label class="login-field-icon fui-user" for="login-name"></label>
+        </div>
+
+        <div class="control-group">
+          {{ form.first_name }}
+        <label class="login-field-icon fui-lock" for="login-pass"></label>
+        </div>
+
+          <div class="control-group">
+          {{ form.last_name }}
+        <label class="login-field-icon fui-user" for="login-name"></label>
+        </div>
+
+        <div class="control-group">
+          {{ form.email }}
+        <label class="login-field-icon fui-lock" for="login-pass"></label>
+        </div>
+
+
+        </form>
+
+      <input class="btn btn-primary btn-large btn-block" type="submit" value="Register">
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

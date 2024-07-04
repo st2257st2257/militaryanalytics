@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<h1>PROFILE</h1>
+
+<form action="{% url 'users:chat' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p>Name: {{ form.second_user_login }}</p>
+    <p>Title: {{ form.title }}</p>
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock %}

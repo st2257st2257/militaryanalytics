@@ -1,0 +1,52 @@
+{% load static %}
+
+<div class="parent">
+    <div class="child">
+        <h1>Basket</h1>
+    </div>
+</div>
+{% if baskets %}
+
+<table align="center" style="padding: 2vw;">
+    <tr>
+        <td>Name</td>
+        <td style="padding-left: 2vw;">Description</td>
+        <td style="padding-left: 2vw;">Price</td>
+        <td style="padding-left: 2vw;">Quantity</td>
+        <td style="padding-left: 2vw;">Sum</td>
+        <td style="padding-left: 2vw;">Action</td>
+    </tr>
+
+
+{% for basket in baskets %}
+    <tr style="padding-top: 30px;">
+        <td>{{ basket.product.shortName }}</td>
+        <td style="padding-left: 2vw;">{{ basket.product.shortText }}</td>
+        <td style="padding-left: 2vw;">{{ basket.product.averagePrice }}</td>
+        <td style="padding-left: 2vw;">{{ basket.quantity }}</td>
+        <td style="padding-left: 2vw;">{{ basket.sum }}</td>
+        <td style="padding-left: 2vw;">
+            <a class="link" href="{% url 'orders:basket_remove' basket.id %}">
+                <img width="50px", src="{% static 'imgs/icons/basket.png' %}">
+            </a>
+        </td>
+    </tr>
+
+{% endfor %}
+    </table>
+
+
+<div class="parent">
+    <div class="child">
+        <p style="font-size: 24px;">Total Sum: {{ baskets.totalSum }} Total Quantity: {{ baskets.totalQuantity }}</p>
+    </div>
+</div>
+<div class="parent" style=" padding-bottom: 2vw;">
+    <div class="child">
+            <button style="width: 200px;">Order Chart</button>
+    </div>
+</div>
+
+{% else %}
+<p>item number: 0</p>
+{% endif %}

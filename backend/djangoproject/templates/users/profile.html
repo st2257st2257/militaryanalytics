@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="parent">
+    <div class="child">
+        <h1>PROFILE</h1>
+    </div>
+</div>
+
+<form action="{% url 'users:profile' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="parent">
+        <div class="child">
+            <p class="parent">First Name</p><p>{{ form.first_name }}</p>
+        </div>
+
+        <div class="child" style="padding-left: 20px;">
+            <p class="parent">Last Name</p><p>{{ form.last_name }}</p>
+        </div>
+    </div>
+
+    <div class="parent">
+        <div class="child">
+            <p class="parent">Image</p><p>{{ form.image }}</p>
+        </div>
+        <div class="child" style="padding-left: 20px;">
+            <img width="250" src="{% if user.image %}{{ user.image.url }}{% else %}{% static 'imgs/img.png' %}{% endif %}">
+        </div>
+    </div>
+
+
+    <div class="parent">
+        <div class="child">
+            <p class="parent">Username</p><p>{{ form.username }}</p>
+        </div>
+
+        <div class="child" style="padding-left: 20px;">
+            <p class="parent">Email</p><p>{{ form.email }}</p>
+        </div>
+    </div>
+
+    <div class="parent">
+        <div class="child">
+            <input type="submit" value="Submit">
+        </div>
+        <div class="child" style="padding-left: 20px;">
+            <a class="link" href="{% url 'users:logout' %}">
+                <img width="50px", src="{% static 'imgs/icons/logout.png' %}">
+            </a>
+        </div>
+    </div>
+</form>
+
+
+{% include 'order/baskets.html' %}
+
+{% endblock %}
