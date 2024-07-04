@@ -4,10 +4,46 @@ from django.contrib import admin
 
 from django.db import models
 from app1.config import fullString
+import datetime
 
 
 def getToken(login):
     return login + str(datetime.now())[:19]
+
+
+class IpData(models.Model):
+    ip4 = models.CharField(max_length=128, blank=True)
+    ip6 = models.CharField(max_length=128, blank=True)
+    userName = models.CharField(max_length=128, blank=True)
+    country = models.CharField(max_length=128, blank=True)
+    city = models.CharField(max_length=128, blank=True)
+    loc = models.CharField(max_length=128, blank=True)
+    org = models.CharField(max_length=128, blank=True)
+    timezone = models.CharField(max_length=128, blank=True)
+    hostname = models.CharField(max_length=128, blank=True)
+    functionNM = models.CharField(max_length=128, blank=True)
+    # brandMoser = models.CharField(max_length=128, blank=True)
+    # isJsOn = models.BooleanField(blank=True)
+    language = models.CharField(max_length=128, blank=True)
+    date = models.CharField(max_length=128, blank=True)
+    data = models.CharField(max_length=128, blank=True)
+
+    def initIp(self, curIp):
+        self.getBaseData(curIp)
+
+    def getBaseData(self, curIp):
+        endpoint = f'https://ipinfo.io/{curIp}/json'
+
+    def __str__(self):
+        return f'{self.ip4} {self.userName} {self.functionNM}'
+
+
+class TgUser(models.Model):
+    userTgId = models.BigIntegerField(default=0)
+    firstNM = models.CharField(max_length=128, blank=True)
+    secondNM = models.CharField(max_length=128, blank=True)
+    age = models.CharField(max_length=128, blank=True)
+    rightData = models.CharField(max_length=128, blank=True)
 
 
 class Access(models.Model):

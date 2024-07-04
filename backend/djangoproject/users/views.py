@@ -5,13 +5,15 @@ from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, HttpResponseRedirect
-
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from django.contrib import auth, messages
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
 
 from products.models import Product, Order, Basket, Commodity, Service, DroneHub
 
-from users.models import User, Chat, Message, getToken
+from users.models import User, Chat, Message, getToken, IpData, TgUser
 from app1.views import \
     sendEmail, \
     sendEmailRecovery, \
@@ -38,6 +40,40 @@ from users.services import \
     get_all_sellers, \
     read_message, \
     read_chat
+from users.forms import \
+    UserLoginForm, \
+    UserRegistrationForm, \
+    UserProfileForm, \
+    UserAddChatForm
+
+
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
+
+def addIp(request, functionNM):
+    curIp = get_client_ip(request)
+    print("curIp: ", curIp)
+    if curIp[:4] != "192.":
+        ipData = IpData()
+        ipData.initIp(curIp=curIp)
+        ipData.userName = request.user
+        ipData.functionNM = functionNM
+        ipData.save()
+
+
+def ip_save(func):
+    def wrapper(*args, **kwargs):
+        print("userIp: ", get_client_ip(args[0]), str(func.__name__))
+        addIp(args[0], str(func.__name__))
+        result = func(*args, **kwargs)
+        return result
+    return wrapper
 
 
 @csrf_exempt
@@ -171,3 +207,57 @@ def index_register(request):
         data = request.POST
         return JsonResponse(register_user(login, password, role, data))
     return render(request, 'register/index.html')
+
+
+@csrf_exempt
+def login(request):
+    if request.method == 'POST':
+        form = UserLoginForm(data=request.POST)
+        if form.is_valid():
+            userName = request.POST['username']
+            password = request.POST['password']
+            user = auth.authenticate(username=userName,
+                                     password=password)
+            if user:
+                auth.login(request, user)
+                return HttpResponseRedirect('/')
+    else:
+        form = UserLoginForm()
+    context = {'form': UserLoginForm()}
+    return render(request, 'users/login.html', context)
+
+
+
+
+
+@csrf_exempt
+def registration(request):
+    return render(request)
+
+
+@ip_save
+def profile(request):
+    return render(request)
+
+
+@csrf_exempt
+@ip_save
+def index_wallet(request):
+    return render(request)
+
+
+@ip_save
+def logout(request):
+    return HttpResponseRedirect('/')
+
+
+@ip_save
+@login_required
+def chat(request):
+    return render(request, 'users/chat.html')
+
+
+@ip_save
+@login_required
+def addMessage(request, chatAddress, value):
+    return HttpResponseRedirect('/')
