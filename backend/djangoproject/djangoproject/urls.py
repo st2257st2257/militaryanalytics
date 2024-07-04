@@ -1,5 +1,5 @@
 """
-URL configuration for djangoproject project.
+URL configuration for militarybet project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -19,33 +19,19 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
+from mainapp.views import index_page, index_test, index_tgbot
+from users.views import index_wallet
+from orders.views import index_order
 
-from app1.views import index_page, \
-    index_news, \
-    index_get, \
-    index_set, \
-    index_checkSettings, \
-    upload_photo, \
-    form_add, \
-    form_email, \
-    upload_file, \
-    get_file
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index_page),
-    path('news/', index_news),
-    path('get/', index_get),
-    path('set/', index_set),
-    path('checkSettings/', index_checkSettings),
-    path('upload_photo/', upload_photo),
-    path('upload_file/', upload_file),
-    path('get_file/', get_file),
-    path('form/add/<str:title>/<str:data>/', form_add, name='form_add'),
-    path('form/email/<str:title>/<str:name>/<str:email>/<str:phone>/<str:company>/<str:message>', form_email, name='form_add'),
-    path('products/', include('products.urls', namespace='products')),
+    path('', index_page, name='indexPage'),
+    path('test/', index_test, name='testPage'),
+    path('tgbot/', index_tgbot, name='tgbot'),
+    path('order/', include('orders.urls', namespace='orders')),
+    path('wallet/', index_wallet, name='indexWallet'),
     path('user/', include('users.urls', namespace='users')),
-    path('sitedata/', include('sitedata.urls', namespace='sitedata')),
 ]
 
 if settings.DEBUG:
