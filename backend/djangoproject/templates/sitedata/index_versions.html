@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <form action="" method="post">
+        {% csrf_token %}
+        Action : <input type="text" name="action" value="addSmall"><br><br>
+        Name : <input type="text" name="name" ><br><br>
+        Value : <input type="text" name="value" ><br><br>
+        Description : <input type="text" name="description" ><br><br>
+      <input type="submit" value="Submit">
+  </form>
+  <form action="" method="post">
+        {% csrf_token %}
+        Action : <input type="text" name="action" value="addMiddle"><br><br>
+        Name : <input type="text" name="name" ><br><br>
+        Value : <input type="text" name="value" ><br><br>
+        Description : <input type="text" name="description" ><br><br>
+      <input type="submit" value="Submit">
+  </form>
+  <form action="" method="post">
+        {% csrf_token %}
+        Action : <input type="text" name="action" value="addBig"><br><br>
+        Name : <input type="text" name="name" ><br><br>
+        Value : <input type="text" name="value" ><br><br>
+        Description : <input type="text" name="description" ><br><br>
+      <input type="submit" value="Submit">
+  </form>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- Метод POST и установлен enctype -->
+<br>
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+  <!-- myfile1 - переменная передающееся в Django -->
+    <p>type: <input type="text" name="typeAction" value="addPost"></p>
+    <p>Text: <input type="text" name="text"></p>
+    <p>Photo: <input type="file" name="filePhoto"></p>
+    <p>Data: <input type="file" name="fileData"></p>
+  <button type="submit">Загрузка</button>
+</form>
+
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+  <!-- myfile1 - переменная передающееся в Django -->
+    <p>type: <input type="text" name="typeAction" value="addFile"></p>
+    <p>type: <input type="text" name="typeProduct" value="commodity"></p>
+    <p>login: <input type="text" name="login"></p>
+    <p>Data: <input type="file" name="fileData"></p>
+    <p>token : <input type="text" name="token" ><br><br></p>
+  <button type="submit">Загрузка</button>
+</form>
+
+</body>
+</html>

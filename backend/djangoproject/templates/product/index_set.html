@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <h1>Set one order</h1>
+  <form action="" method="post">
+        {% csrf_token %}
+        Action : <input type="text" name="action" value="setOne"><br><br>
+        Token : <input type="text" name="token" ><br><br>
+        ProductId : <input type="text" name="productId" ><br><br>
+        Quantity : <input type="number" name="quantity" value=1><br><br>
+        ChatID : <input type="number" name="chatID" value=-1><br><br>
+      <h3>For leasing orders:</h3>
+      Leasing : <input type="number" name="leasing" value=-1><br><br>
+      fullName : <input type="text" name="fullName" value=><br><br>
+      email : <input type="text" name="email" value=><br><br>
+      companyName : <input type="text" name="companyName" value=><br><br>
+      phone : <input type="text" name="phone" value=""><br><br>
+      message : <input type="text" name="message" value="Хочу в лизинг этот товар"><br><br>
+      <input type="submit" value="Submit">
+  </form>
+  <h1>Set multi orders</h1>
+  <form action="" method="post">
+        {% csrf_token %}
+        Action : <input type="text" name="action" value="setMulti"><br><br>
+        Token : <input type="text" name="token" ><br><br>
+        ProductArray : <input type="text" name="productIdArray" value='438,439,426'><br><br>
+        QuantityArray : <input type="text" name="quantityArray" value='1,2,1'><br><br>
+      <input type="submit" value="Submit">
+  </form>
+   <h1>Edit order status</h1>
+  <form action="" method="post">
+        {% csrf_token %}
+        Action : <input type="text" name="action" value="editStatus"><br><br>
+        Token : <input type="text" name="token" ><br><br>
+        OrderID : <input type="number" name="orderId" value=-1><br><br>
+        NewStatus : <input type="number" name="newStatus" value=1><br><br>
+      <input type="submit" value="Submit">
+  </form>
+</body>
+</html>

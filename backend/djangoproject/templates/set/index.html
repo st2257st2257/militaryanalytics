@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <form action="" method="post">
+        {% csrf_token %}
+        Class To Edit : <input type="text" name="classToEdit" value="User"><br><br>
+        UserLogin : <input type="text" name="userLogin" ><br><br>
+        token : <input type="text" name="token" ><br><br>
+        fieldName : <input type="text" name="fieldName" ><br><br>
+        newValue : <input type="text" name="newValue" ><br><br>
+      <input type="submit" value="Submit">
+  </form>
+  <form action="" method="post">
+        {% csrf_token %}
+        Class To Edit : <input type="text" name="classToEdit" value="Product"><br><br>
+        UserLogin : <input type="text" name="userLogin" ><br><br>
+        token : <input type="text" name="token" ><br><br>
+        productName : <input type="text" name="name" ><br><br>
+        fieldName : <input type="text" name="fieldName" ><br><br>
+        newValue : <input type="text" name="newValue" ><br><br>
+      <input type="submit" value="Submit">
+  </form>
+</body>
+</html>

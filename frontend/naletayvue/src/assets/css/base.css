@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --vt-c-white-sticky: rgba(255, 255, 255, 0.8);
+  --vt-c-white: #ffffff;
+  --vt-c-white-soft: #F4F4F4;
+  --vt-c-white-mute: #343A40;
+  --vt-c-white-hover: #f8f8f8;
+
+  --vt-c-white-grey: #6C757D;
+
+  --vt-c-white-disabled: #9e2f38;
+  --vt-c-white-selected: #2F849E;
+  --vt-c-white-warning: #ffcc80;
+  --vt-c-white-success: rgb(16, 196, 76);
+  --vt-c-white-info: #97C2CF;
+  --vt-c-white-green-button: #088B95;
+
+  --vt-c-black: #181818;
+  --vt-c-black-soft: #222222;
+  --vt-c-black-mute: #282828;
+  --vt-c-black-hover: #313131;
+  --vt-c-black-button: #1b1b1b;
+  --vt-c-black-disabled: #9e2f38;
+  --vt-c-black-warning: #ffcc80;
+  --vt-c-black-success: #c8e6c9;
+  --vt-c-black-info: #97C2CF;
+  --vt-c-black-sub-button: #313131;
+
+  --vt-c-indigo: #2c3e50;
+
+  --vt-c-divider-light-1: #DEE2E6;
+  --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
+  
+  --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
+  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
+}
+
+/* Семантические цветовые переменные */
+:root {
+  --color-background: var(--vt-c-white);
+  --color-background-soft: var(--vt-c-white-soft);
+  --color-background-footer: var(--vt-c-white-mute);
+  --color-background-hover: var(--vt-c-divider-light-1);
+  --color-active-background: var(--vt-c-white-hover);
+  
+  --color-btn-background: var(--vt-c-white-soft);
+  --color-btn-text: var(--vt-c-white-grey);
+  
+  --color-btn-green-background: var(--vt-c-white-green-button);
+  --color-btn-green-text: var(--vt-c-white);
+  
+  --color-btn-icon-background: var(--color-background-hover);
+  --color-btn-icon: var(--vt-c-white-grey);
+
+  --color-background-error: var(--vt-c-white-disabled);
+  --color-background-warning: var(--vt-c-white-warning);
+  --color-background-info: var(--vt-c-white-info);
+  --color-background-success: var(--vt-c-white-success);
+
+  --color-border: var(--vt-c-divider-light-1);
+  --color-border-hover: var(--vt-c-divider-light-2);
+
+  --color-heading: var(--vt-c-text-light-1);
+  --color-text: var(--vt-c-divider-light-1);
+  --color-active-text: var(--vt-c-white);
+  --color-hover-text: var(--vt-c-white-soft);
+  --color-mute-text: var(--vt-c-white-mute);
+
+  --color-background-sticky: var(--vt-c-white-sticky);
+  --color-black-text: var(--vt-c-black);
+  --section-gap: 160px;
+}
+
+*,
+*::before,
+*::after {
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0; /* Добавлено для сброса отступов */
+  font-weight: normal;
+  transition:  0.2s all;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden; /* Запретить горизонтальную прокрутку */
+  overflow-y: auto; /* Разрешить вертикальную прокрутку при необходимости */
+  color: var(--color-btn-icon);
+  background: var(--color-background);
+  line-height: 1.6;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition:  0.2s all linear;
+}
+
+button {
+  cursor: pointer;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  padding: 5px 25px;
+  width: fit-content;
+  height: 45px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+button.btn-default {
+  margin-top: 15px;
+  color: var(--color-text);
+  background: var(--color-background-button);
+}
+
+button.btn-default:hover {
+  color: var(--color-active-text);
+  background: var(--color-background-hover);
+}

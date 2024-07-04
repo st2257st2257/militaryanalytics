@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>One file for download</h1>
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+  <!-- myfile1 - переменная передающееся в Django -->
+    <p>Action: <input type="text" name="action" value="addOneFile"></p>
+    <p>Class name: <input type="text" name="className"></p>
+    <p>User owner : <input type="text" name="userOwner"></p>
+    <p>Object type : <input type="text" name="objectType"></p>
+    <p>File name : <input type="text" name="fileName"></p>
+    <p>Photo: <input type="file" name="filePhoto"></p>
+    <p>Data: <input type="file" name="fileData"></p>
+    <p>token : <input type="text" name="token" ><br><br></p>
+  <button type="submit">Загрузка</button>
+</form>
+
+<h1>More files for download</h1>
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+  <!-- myfile1 - переменная передающееся в Django -->
+    <p>Action: <input type="text" name="action" value="addMultyFiles"></p>
+    <p>Class name: <input type="text" name="className"></p>
+    <p>token : <input type="text" name="token" ></p>
+    <p>File name : <input type="text" name="fileName"></p>
+    <p>More Files: <input type="file" name="fileDataMore" multiple></p>
+  <button type="submit">Загрузка</button>
+</form>
+</body>
+</html>

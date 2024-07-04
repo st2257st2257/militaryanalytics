@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <form action="" method="post">
+        {% csrf_token %}
+        What to check: <input type="text" name="whatToCheck" value="token"><br><br>
+        UserLogin : <input type="text" name="userLogin" ><br><br>
+        token : <input type="text" name="token" ><br><br>
+      <input type="submit" value="Submit">
+  </form>
+</body>
+</html>

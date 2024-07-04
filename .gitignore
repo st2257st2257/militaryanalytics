@@ -1,0 +1,7 @@
+# DEV
+
+**/*.swo
+**/*.swp
+**/*.tmp
+
+# /backend/djangoproject/db.sqlite3

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Get all orders by token</h1>
+  <form action="" method="post">
+        {% csrf_token %}
+        Action : <input type="text" name="action" value="getAllOrders"><br><br>
+        Token : <input type="text" name="token" ><br><br>
+      <input type="submit" value="Submit">
+  </form>
+<h1>Get all orders by token and seller</h1>
+  <form action="" method="post">
+        {% csrf_token %}
+        Action : <input type="text" name="action" value="getAllOrdersBySeller"><br><br>
+        Seller : <input type="text" name="seller" ><br><br>
+        Token : <input type="text" name="token" ><br><br>
+      <input type="submit" value="Submit">
+  </form>
+<h1>Get all orders by token and seller order id</h1>
+  <form action="" method="post">
+        {% csrf_token %}
+        Action : <input type="text" name="action" value="getAllOrdersBySellerOrderId"><br><br>
+        Seller Order Id : <input type="text" name="sellerOrderId" ><br><br>
+        Token : <input type="text" name="token" ><br><br>
+      <input type="submit" value="Submit">
+  </form>
+</body>
+</html>

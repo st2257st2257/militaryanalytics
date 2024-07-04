@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Get by name</h1>
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+  <!-- myfile1 - переменная передающееся в Django -->
+    <p>Action: <input type="text" name="action" value="getFileName"></p>
+    <p>File name : <input type="text" name="fileName"></p>
+    <p>User owner : <input type="text" name="userOwner"></p>
+  <button type="submit">Получение</button>
+</form>
+
+<h1>Get by type</h1>
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+  <!-- myfile1 - переменная передающееся в Django -->
+    <p>Action: <input type="text" name="action" value="getFileType"></p>
+    <p>User owner : <input type="text" name="userOwner"></p>
+<p>Object type : <input type="text" name="objectType"></p>
+  <button type="submit">Получение</button>
+</form>
+
+<h1>Get by class</h1>
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+  <!-- myfile1 - переменная передающееся в Django -->
+    <p>Action: <input type="text" name="action" value="getFileClass"></p>
+    <p>User owner : <input type="text" name="userOwner"></p>
+        <p>Class name: <input type="text" name="className"></p>
+  <button type="submit">Получение</button>
+</form>
+
+</body>
+</html>

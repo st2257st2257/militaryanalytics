@@ -1,0 +1,419 @@
+@import './base.css';
+
+a,
+.green {
+  cursor: pointer;
+  text-decoration: none;
+  width: fit-content;
+  height: fit-content;
+  color: hsla(160, 100%, 37%, 1);
+  border-bottom: 1px dashed transparent;
+}
+
+a,
+.grey {
+  cursor: pointer;
+  text-decoration: none;
+  width: fit-content;
+  height: fit-content;
+  color: var(--color-btn-icon);
+  border-bottom: 1px dashed transparent;
+}
+
+/* DISABLED START*/
+
+button[disabled] {
+  cursor: not-allowed;
+  border: none;
+}
+
+button[disabled]:hover {
+  border: none;
+}
+
+a[disabled] {
+  pointer-events: none;
+  color: #c0c0c0 !important;
+  cursor: not-allowed;
+}
+
+a[disabled]:hover::after {
+  content: "В разработке";
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  z-index: 999;
+  margin-top: -5px;
+  margin-left: 5px; 
+}
+
+/* DISABLED END*/
+
+.product_image,.service_image,.item_image {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+
+/* BUTTONS START*/
+
+@media (hover: hover) {
+  a:hover.link{
+    border-bottom: 1px dashed var(--color-btn-green-background);
+  }
+
+  .icon-btn:hover path {
+    stroke: var(--color-btn-icon);
+  }
+
+  .icon-btn:hover {
+    background: var(--color-btn-icon-background);
+  }
+
+  .btn:not(.green-btn,.error-btn,.transparent-btn,.white-btn):hover {
+    background: rgba(0,0,0,0.1);
+  }
+  
+  .localization-btn:hover {
+    background: var(--color-background-hover);
+  }
+
+  .white-btn:hover{
+    transform: scale(1.05);
+  }
+
+  .soft-btn:hover {
+    background: var(--color-border);
+  }
+
+  .green-btn:hover{
+    transform: scale(1.05);
+  }
+
+  .btn:active:not(.search-btn) {
+    transform: scale(0.9);
+  }
+
+  .search-btn:hover {
+    color: var(--color-black-text);
+  }
+
+  .error-btn:hover {
+    transform: scale(1.05);
+  }
+
+  .checkbox-btn:hover {
+    background: var(--color-border);
+  }
+
+  .transparent-btn:hover {
+    border-bottom: 1px dashed var(--color-btn-text);
+  }
+}
+
+.carousel-item svg {
+  pointer-events: none;
+}
+
+.icon-btn {
+  min-width: 38px;
+  min-height: 38px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; 
+}
+
+.icon-margin {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.green-btn .icon-margin path {
+  margin-right: 5px;
+  stroke: var(--color-btn-green-text);
+}
+
+.centred_info {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.mini-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 20px;
+  min-height: 25px;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: center;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 25px;
+  min-height: 45px;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: center;
+}
+
+.checkbox-btn {
+  display: flex;
+  padding: 10px 30px 10px 30px;
+  font-weight: 600;
+  color: var(--color-btn-text);
+  border: 1px solid var(--color-border);
+}
+
+
+.green-btn {
+  font-weight: 600;
+  color: var(--color-btn-green-text);
+  background: var(--color-btn-green-background);
+}
+
+.error-btn {
+  font-weight: 500;
+  color: var(--color-active-text);
+  background: var(--color-background-error);
+}
+
+.white-btn {
+  font-weight: 500;
+  color: var(--color-black-text);
+  background: var(--color-btn-background);
+}
+
+.soft-btn{
+  background: var(--color-background-soft);
+  color: var(--color-btn-text)
+}
+
+.search-btn {
+  height: 10px;
+  border-radius: 0; 
+  padding: 20px;
+  color: var(--color-btn-text);
+  border-left: 1px solid var(--color-border);
+}
+
+.transparent-btn{
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 25px;
+  border-radius: 0px;
+  background: transparent;
+  color: var(--color-btn-text);
+  border-bottom: 1px dashed transparent;
+}
+
+.localization-btn {
+  width: fit-content;
+  padding-left: 15px;
+  padding-right: 15px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  color: var(--color-btn-text);
+  border: 1px solid var(--color-border);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; 
+}
+/* BUTTONS END*/
+
+.list__container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  width: 100%;
+  align-items: flex-start;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-mute-text);
+  gap: 25px;
+}
+
+.loading-indicator {
+  display: flex;
+  width: 100%;
+  height: 500px;
+}
+
+.list__container h2{
+  font-weight: 600;
+}
+
+.carousel-bg path{
+  fill: rgba(255,255,255, 0.15);
+}
+
+/* Медиа-запросы для мобильных устройств */
+@media (max-width: 768px) {
+  .list__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+}
+
+@media (min-width: 1024px) {
+  body {
+    display: flex;
+    place-items: center;
+  }
+}
+
+.component-view-container {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+}
+
+footer .org-logo.naletay path {
+  fill: #fff !important;
+}
+
+footer .org-logo.gtlk g g {
+  fill: #fff !important;
+}
+
+.file-icon {
+  cursor: pointer;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  height: 30px;
+}
+
+.file-icon svg {
+  width: 100%;
+  height: 100%;
+  font-size: 1em;
+}
+
+.file-input {
+  display: none;
+}
+
+.file-icon path {
+  fill: var(--color-mute-text);
+  stroke: var(--color-mute-text);
+}
+
+.arrow-icon path{
+  stroke-width: 5;
+  stroke: #7E858C;
+}
+
+.green-stroke path{
+  stroke-width: 6;
+  stroke: var(--color-btn-green-background);
+}
+
+.badge-ggz{
+  display: flex;
+  width: fit-content;
+  height: 36px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap:10px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 0px 10px;
+  border-radius: 55px;
+  background-color: #007bff;
+  color: white;
+}
+
+.badge_icon {
+  width: 18px;
+  height: 18px;
+}
+
+@media (hover: hover) {
+  .file-icon:hover path {
+      fill: var(--color-btn-green-background);
+      stroke: var(--color-btn-green-background);
+  }
+}
+
+.status-pending {
+  background-color: #ffc107 !important;
+  color: white !important;
+}
+
+.status-confirmed {
+  background-color: #28a745 !important;
+  color: white !important;
+}
+
+.status-paid {
+  background-color: #17a2b8 !important;
+  color: white !important;
+}
+
+.status-delivery {
+  background-color: #007bff !important;
+  color: white !important;
+}
+
+.status-fulfilled {
+  background-color: #007bff !important;
+  color: white !important;
+}
+
+.status-canceled {
+  background-color: var(--color-background-error) !important;
+  color: white !important;
+}
+
+.status-undefined {
+  border: 2px solid var(--color-background-error) !important;
+  color: white !important;
+}
+
+.benefit-card .icon-placeholder path {
+  stroke: #343A40;
+}
