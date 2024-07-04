@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from users.views import index_wallet
 
 
 from app1.views import index_page, \
@@ -41,6 +42,8 @@ urlpatterns = [
     path('upload_photo/', upload_photo),
     path('upload_file/', upload_file),
     path('get_file/', get_file),
+    path('wallet/', index_wallet, name='indexWallet'),
+    path('order/', include('orders.urls', namespace='orders')),
     path('form/add/<str:title>/<str:data>/', form_add, name='form_add'),
     path('form/email/<str:title>/<str:name>/<str:email>/<str:phone>/<str:company>/<str:message>', form_email, name='form_add'),
     path('products/', include('products.urls', namespace='products')),

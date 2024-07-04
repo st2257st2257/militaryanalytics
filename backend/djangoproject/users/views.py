@@ -45,6 +45,7 @@ from users.forms import \
     UserRegistrationForm, \
     UserProfileForm, \
     UserAddChatForm
+from orders.models import Basket
 
 
 def get_client_ip(request):
@@ -237,7 +238,28 @@ def registration(request):
 
 @ip_save
 def profile(request):
-    return render(request)
+    if request.method == 'POST':
+        form = UserProfileForm(instance=request.user,
+                               data=request.POST,
+                               files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/')
+        else:
+            print(form.errors)
+    else:
+        form = UserProfileForm(instance=request.user)
+    print("+++=== ", request.user)
+    baskets = Basket.objects.filter(user=request.user)
+
+    context = {'form': form,
+               'baskets': baskets,
+               'volume': request.user.walletVolume / 10 ** 6,
+               'address': request.user.walletAddress
+               }
+    return render(request,
+                  'users/profile.html',
+                  context)
 
 
 @csrf_exempt
@@ -261,3 +283,37 @@ def chat(request):
 @login_required
 def addMessage(request, chatAddress, value):
     return HttpResponseRedirect('/')
+
+@csrf_exempt
+@ip_save
+def index_wallet(request):
+    if request.method == 'POST':
+        form = UserProfileForm(instance=request.user,
+                               data=request.POST,
+                               files=request.FILES)
+
+        if "typeAction" in request.POST.keys():
+            if request.POST["typeAction"] == "sendMoney":
+                walletAddress = request.POST["walletAddress"]
+                amount = float(request.POST["amount"])
+                print(walletAddress, amount)
+                if request.user.walletVolume > 10 ** 6 * 0.9 * amount \
+                        and amount > 0.001:
+                    print(str(amount), amount)
+                elif amount <= 0.001:
+                    print("To small amount")
+                else:
+                    print("Error: not enouth TON for send")
+    else:
+        form = UserProfileForm(instance=request.user)
+
+    request.user.walletVolume = int(float(9876543) * 1000000)
+    request.user.walletAddress = "skbvskdbvkb3k2j3bj34k234fjb2b2kdvvd"
+    request.user.save()
+    context = {'form': form,
+               'volume': request.user.walletVolume / 10 ** 6,
+               'address': request.user.walletAddress
+               }
+    return render(request,
+                  'users/wallet.html',
+                  context)

@@ -18,6 +18,7 @@ from users.views import \
 @ip_save
 @csrf_exempt
 def index_order(request):
+    print("=================================")
     if request.method == 'POST':
         pass
     orderType = OrderType.objects.all()
