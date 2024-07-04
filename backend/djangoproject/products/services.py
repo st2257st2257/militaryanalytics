@@ -1,8 +1,6 @@
 # @Aleksandr Kristal v0.0.1 || create all
 from products.models import \
     Product, \
-    Order, \
-    Basket, \
     Commodity, \
     Service, \
     DroneHub, \

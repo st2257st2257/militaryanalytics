@@ -11,7 +11,7 @@ from django.contrib import auth, messages
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
 
-from products.models import Product, Order, Basket, Commodity, Service, DroneHub
+from products.models import Product, Commodity, Service, DroneHub
 
 from users.models import User, Chat, Message, getToken, IpData, TgUser
 from app1.views import \

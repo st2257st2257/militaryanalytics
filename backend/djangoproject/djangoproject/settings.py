@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'app1',
     'products',
     'users',
+    'orders',
     'sitedata',
     'corsheaders',
     'sslserver',

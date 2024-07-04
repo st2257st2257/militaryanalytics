@@ -18,16 +18,16 @@
     </div>
 
     <ul id="nav-bar">
-        <li><a style="font-size: 20px;" class="link" href="#">News</a></li>
-        <li><a style="font-size: 20px;" class="link" href="#">Bets</a></li>
+        <li><a style="font-size: 20px;" class="link" href="{% url 'indexPage' %}">News</a></li>
+        <li><a style="font-size: 20px;" class="link" href="{% url 'orders:index' %}">Bets</a></li>
         <li><a style="font-size: 20px;" class="link" href="#">Analytics</a></li>
         {% if user.is_authenticated %}
-            <li style="float: right;"><a style="font-size: 20px;" class="link" href="#">Profile</a></li>
-            <li style="float: right;"><a style="font-size: 20px;" class="link" href="#">Wallet</a></li>
-            <li style="float: right;"><a style="font-size: 20px;" class="link" href="#">&#9993;</a></li>
+            <li style="float: right;"><a style="font-size: 20px;" class="link" href="{% url 'users:profile' %}">Profile</a></li>
+            <li style="float: right;"><a style="font-size: 20px;" class="link" href="{% url 'indexWallet' %}">Wallet</a></li>
+            <li style="float: right;"><a style="font-size: 20px;" class="link" href="{% url 'users:chat' %}">&#9993;</a></li>
         {% else %}
-            <li style="float: right;"><a style="font-size: 20px;" class="link" href="#">Login</a></li>
-            <li style="float: right;"><a style="font-size: 20px;" class="link" href="#">Register</a></li>
+            <li style="float: right;"><a style="font-size: 20px;" class="link" href="{% url 'users:login' %}">Login</a></li>
+            <li style="float: right;"><a style="font-size: 20px;" class="link" href="{% url 'users:registration' %}">Register</a></li>
         {% endif %}
 
         {% if user.is_superuser or user.is_staff %}

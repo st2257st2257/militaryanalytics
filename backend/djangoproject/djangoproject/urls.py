@@ -33,7 +33,7 @@ from app1.views import index_page, \
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index_page),
+    path('', index_page, name='indexPage'),
     path('news/', index_news),
     path('get/', index_get),
     path('set/', index_set),

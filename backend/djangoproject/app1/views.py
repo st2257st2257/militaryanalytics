@@ -12,7 +12,7 @@ import xlrd, xlwt
 
 from users.models import User, Chat, Message
 from users.models import getToken
-from products.models import Product, Order, Basket, Commodity, Service, DroneHub
+from products.models import Product, Commodity, Service, DroneHub
 
 from app1.models import Worker, Post, CustomForm, EmailForm, UserFile
 from app1.models import News

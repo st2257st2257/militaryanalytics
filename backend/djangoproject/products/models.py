@@ -50,43 +50,6 @@ class SellerOrder(models.Model):
         return self.orderIdList.split(",")
 
 
-class Order(models.Model):
-    userLogin = models.CharField(max_length=1024, blank=True)
-    productID = models.IntegerField(default=0)
-    date = models.DateTimeField(auto_now_add=True)
-    chatID = models.IntegerField(default=0)
-    quantity = models.IntegerField(default=1)
-    sellerLogin = models.CharField(max_length=1024, blank=True)
-    orderStatusId = models.IntegerField(default=1)
-
-    def __str__(self):
-        return f'ID: {self.id} | Продукт: {self.productID} | Владелец: {self.userLogin}'
-
-
-class BasketQuerySet(models.QuerySet):
-    def totalSum(self):
-        return sum(basket.sum() for basket in self)
-
-    def totalQuantity(self):
-        return sum(basket.quantity for basket in self)
-
-
-class Basket(models.Model):
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
-    product = models.ForeignKey(to=Product, on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now_add=True)
-    quantity = models.PositiveIntegerField(default=0)
-    fileData = models.FileField(upload_to='fileData/', blank=True)
-
-    objects = BasketQuerySet.as_manager()
-
-    def sum(self):
-        return self.product.price * self.quantity
-
-    def __str__(self):
-        return f'ID: {self.id} | Продукт: {self.product.id} | Владелец: {self.user.id}'
-
-
 class Commodity(models.Model):
     settings = {"userLogin": "Логин пользователя",
                 "article": "Артикул продукта",
@@ -587,12 +550,6 @@ class ServiceAdmin(admin.ModelAdmin):
 class DroneHubAdmin(admin.ModelAdmin):
     search_fields = ("id", "userLogin", "productName", )
     list_display = ("id", "userLogin", "productName")
-
-
-@admin.register(Order)
-class OrderAdmin(admin.ModelAdmin):
-    search_fields = ("id", "userLogin", "productID", "sellerLogin",)
-    list_display = ("id", "userLogin", "productID", "sellerLogin")
 
 
 @admin.register(Status)

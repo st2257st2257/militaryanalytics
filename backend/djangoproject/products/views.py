@@ -10,8 +10,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 from products.models import \
     Product, \
-    Order, \
-    Basket, \
     Commodity, \
     Service, \
     DroneHub
