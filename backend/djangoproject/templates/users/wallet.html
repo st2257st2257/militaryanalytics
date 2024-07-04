@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="parent">
+    <div class="child">
+        <h1>Wallet</h1>
+    </div>
+</div>
+
+
+<form action="{% url 'users:profile' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="parent">
+        <input hidden type="text" name="typeAction" value="sendMoney">
+
+        <div class="child" style="padding-left: 20px;">
+            <p class="parent">Wallet Address: </p><p><input type="text" name="walletAddress"></p>
+        </div>
+        <div class="child" style="padding-left: 20px;">
+            <p class="parent">Amount: </p><p><input type="number" min="0" max="1" step="0.001" name="amount"></p>
+        </div>
+    </div>
+
+    <div class="parent">
+        <div class="child">
+            <p>My adress: {{ address }}</p>
+        </div>
+    </div>
+    <div class="parent">
+        <div class="child">
+            <input type="submit" value="Balance: {{ volume }}">
+        </div>
+    </div>
+    <div class="parent">
+        <div class="child" style="padding-top: 20px; padding: 20px;">
+            <input type="submit" value="Send TON">
+        </div>
+    </div>
+</form>
+
+{% endblock %}
