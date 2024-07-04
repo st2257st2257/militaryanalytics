@@ -9,8 +9,10 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+
 import os
 from pathlib import Path
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!$s44)ig4+xk$mqvex9kewf1cd!_#42veo%ayx(z93k=ofo5f5'
+SECRET_KEY = 'django-insecure-^6h%fif0wn7ca+tnd%k$6m2ow9&^p+nrau8a&nj_#vrt_d9!%4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = not (os.getenv('DJANGO_DEBUG', 'True') == 'False')
 
 ALLOWED_HOSTS = ['*']
 
@@ -37,9 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mainapp',
-    'orders',
+    'app1',
+    'products',
     'users',
+    'sitedata',
     'corsheaders',
     'sslserver',
 ]
@@ -47,6 +50,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -55,14 +59,12 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    os.getenv('DJANGO_FRONTEND_URL', 'http://localhost:8000'),
-    os.getenv('DJANGO_FRONTEND_URL', 'http://localhost'),
-    os.getenv('DJANGO_FRONTEND_URL', 'http://127.0.0.1:8000'),
-    os.getenv('DJANGO_FRONTEND_URL', 'http://127.0.0.1'),
-    os.getenv('DJANGO_FRONTEND_URL', 'http://127.0.0.1:5070'),
-    os.getenv('DJANGO_FRONTEND_URL', 'http://localhost:5077'),
-    os.getenv('DJANGO_FRONTEND_URL', 'http://192.168.1.70:5070'),
-    os.getenv('DJANGO_FRONTEND_URL', 'http://46.138.245.249:5080'),
+    os.getenv('DJANGO_FRONTEND_URL', 'http://localhost:8080'),
+    os.getenv('DJANGO_FRONTEND_URL', 'http://localhost:8081'),
+    os.getenv('http://налетай.рф', 'http://localhost:8080'),
+    os.getenv('http://налетай.рф', 'http://localhost:8081'),
+    os.getenv('http://xn--80aaorhk2b.xn--p1ai', 'http://localhost:8080'),
+    os.getenv('http://xn--80aaorhk2b.xn--p1ai', 'http://localhost:8081'),
 ]
 
 ROOT_URLCONF = 'djangoproject.urls'
@@ -95,16 +97,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-"""
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "OPTIONS": {
-            "service": "my_service",
-            "passfile": ".my_pgpass",
-        },
-    }
-}"""
 
 
 # Password validation
@@ -154,9 +146,24 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Users
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
-AUTH_USER_MODEL = "users.User"
+EMAIL_HOST = "smtp.yandex.ru"
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "support@naletay.shop"
+EMAIL_HOST_PASSWORD = "uazehmpwpfqyplax"
+EMAIL_USE_SSL = True
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
+# cshpvyhfcxzylwwx
+# - support@naletay.shop uazehmpwpfqyplax
+# + aleksander.kristal@yandex.ru lemfwiokqrrzjopf
+# - awesome.gtlk@yandex.ru ynejqexgiwkducmb
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
+EMAIL_ADMIN = EMAIL_HOST_USER
+
+
+#if os.getenv('DJANGO_ENABLE_SSL', 'False') == 'True':
+#    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+#    SECURE_SSL_REDIRECT = True
