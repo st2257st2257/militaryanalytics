@@ -184,9 +184,13 @@ def index_chat(request):
                'messageList': messageListStr + "]",
                'currentUserName': request.user.username,
                'firstUserAddress': firstUserAddress,
-               'urlAdress': urlAddressGlobal}
+               'urlAdress': urlAddressGlobal,
+               'chat_js_include': 1}
     print(context)
-    return render(request, 'users/chat.html', context)
+    return render(
+        request,
+        'users/chat.html',
+        context)
 
 
 @csrf_exempt

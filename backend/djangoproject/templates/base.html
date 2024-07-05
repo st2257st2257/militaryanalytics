@@ -10,6 +10,10 @@
     <link href="{% static '/css2/footer.css' %}" rel="stylesheet">
     <link href="{% static '/css2/test/index.css' %}" rel="stylesheet">
     <link href="{% static '/css2/test/basket.css' %}" rel="stylesheet">
+    {% if chat_js_include %}
+        <link href="{% static '/css2/chat/main.css' %}" rel="stylesheet">
+        <script type="text/javascript" src="{% static '/js/chat/main.js' %}"></script>
+    {% endif %}
 </head>
 <body>
 

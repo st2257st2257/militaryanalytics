@@ -18,6 +18,19 @@ services:
     volumes:
       - ../backend/djangoproject:/usr/src/app
 
+  telega:
+    build:
+      context: ../telegram/mainbot/
+      dockerfile: Dockerfile
+    networks:
+      - naletay
+    image: "naletay/telega:v1"
+    container_name: naletay_telega_v1
+    ports:
+      - "8085:8085"
+    volumes:
+      - ../telegram/mainbot:/usr/src/app
+
   nginx:
     build:
       context: ../backend/djangoproject/docker/nginx
