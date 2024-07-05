@@ -1,9 +1,4 @@
 # @Aleksandr Kristal v0.0.1 || create all
-from products.models import \
-    Product, \
-    Commodity, \
-    Service, \
-    DroneHub
 from typing import Dict
 import ast
 from app1.config import \
@@ -17,8 +12,6 @@ from users.models import \
     User
 from app1.models import \
     UserFile
-from products.services import \
-    _get_company_name
 from app1.views import \
     sendEmail, \
     sendEmailRecovery, \
@@ -26,8 +19,7 @@ from app1.views import \
 import os
 import shutil
 from datetime import datetime
-from users.models import User, Chat, Message, getToken
-
+from users.models import Chat, Message, getToken, User
 
 def get_user_token(login: str, password: str):
     flag = User.objects.filter(login=login,
@@ -352,3 +344,30 @@ def register_user(login: str, password: str, role: str, data):
     else:
         print(f"User in the DB: {data['log']}")
         return {"result": dictStatus.get(101)}
+
+
+def make_js_dict(user):
+    chatList = list(Chat.objects.filter(firstUser=user)) + \
+               list(Chat.objects.filter(secondUser=user))
+
+    messageListStr = "["
+    firstUserAddress = ""
+
+    for chat in chatList:
+        messages = Message.objects.filter(chat=chat)
+        for message in messages:
+            chatUserName = ""
+            if chat.secondUser == user:
+                chatUserName = chat.firstUser.username
+                firstUserAddress = chatUserName
+            else:
+                chatUserName = chat.secondUser.username
+                firstUserAddress = chatUserName
+            res = "['"
+            if message.owner == user:
+                res += str(message.owner.username + "', '" + chatUserName + "', 0, '")
+            else:
+                res += str(message.owner.username + "', '" + chatUserName + "', 1, '")
+            res += str(message.text + "', '" + message.date.strftime("%B %d, %Y") + "'],")
+            messageListStr += res
+    return messageListStr, firstUserAddress

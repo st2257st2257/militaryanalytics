@@ -3,41 +3,101 @@
 
 {% block content %}
 
-<div class="parent" style="padding: 20px;">
-    <div class="child">
-        <form action="{% url 'users:chat' %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <p>{{ form.second_user_login }}</p>
-        <p>{{ form.title }}</p>
-        <input type="submit" value="Начать общение">
-        </form>
-    </div>
-    <div class="child" style="padding-left: 5vw;">
-        <div style="overflow: scroll; height: 25vh; width: 20vw;">
-            {% for item in chatList%}
-            <button onclick="addMessageTextArr('{{item.secondUserLogin}}');" style="width: 18vw; background-color: #E8EDFE; color: black;">
-                <p>
-                    {{item.firstUserLogin}} - {{item.secondUserLogin}}
-                </p>
-            </button>
-            {% endfor %}
+
+
+
+    <style>
+	.wrapper {
+		display: grid;
+        grid-gap: 10px;
+		grid-template-columns: 30vw 70vw;
+		background-color: #fff;
+		color: #444;
+	}
+
+	.wrapperMini {
+		display: grid;
+        grid-gap: 10px;
+		grid-template-columns: 15vw;
+		background-color: #fff;
+		color: #444;
+	}
+
+	.wrapperForm {
+		display: grid;
+        grid-gap: 10px;
+		grid-template-columns: 19vw 10vw;
+		background-color: #fff;
+		color: #444;
+	}
+
+	.box {
+		border-radius: 5px;
+		padding: 20px;
+		font-size: 100%;
+
+	}
+
+	.boxMini {
+		border-radius: 5px;
+		font-size: 100%;
+
+	}
+
+	.boxForm {
+		border-radius: 5px;
+		font-size: 100%;
+
+	}
+   </style>
+	 <div class="wrapper">
+		<div class="box a">
+            <div class="wrapperMini">
+                <div class="boxMini a">
+                    <form action="{% url 'users:chat' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="wrapperForm">
+                            <div class="boxForm a">
+                                <p>{{ form.second_user_login }}</p>
+                            </div>
+                            <!--<p>{{ form.title }}</p>-->
+                            <div class="boxForm b" style="padding-top: 16px;">
+                                <input type="submit" value="Начать общение" style="width: 10vw">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="boxMini b">
+                    <div style="overflow: scroll; height: 50vh; width: 30vw;">
+                        {% for item in chatList%}
+                        <button onclick="addMessageTextArr('{% if currentUserName != item.secondUser.username %}{{ item.secondUser.username }}{% else %}{{ item.firstUser.username }}{% endif %}');" style="width: 30vw; background-color: #E8EDFE; color: black;margin-top: 10px;">
+                        <p>
+                            {{item.firstUser.username}} - {{item.secondUser.username}}
+                        </p>
+                        </button>
+                        {% endfor %}
+                    </div>
+                </div></div>
+
         </div>
-    </div>
-</div>
+<!-- https://127.0.0.1:8000/user/addMessage/st2257/z -->
+         <div class="box b">
+            <div class="parent">
+                <div class="child">
+                    <div  style="background-color: #E9EBF1; width: 50vw; border-radius: 25px;">
+                        <div style="overflow: scroll; height: 50vh; width: 50vw;" id="chatId"></div>
+                        <div style="width: 50vw;">
+                            <input autofocus="autofocus" id="textFieldId" type="text" style="width: 39.5vw;" placeholder="Your message">
+                            <button onclick="addMessage()" style="width: 10vw;">send</button>
+                        </div>
+                        <form action="{% url 'users:chat' %}" method="post" enctype="multipart/form-data"></form>
+                    </div>
+                </div>
+            </div>
+         </div>
+	</div>
 
 
-<div class="parent"><div class="child">
-<div  style="background-color: #E9EBF1; width: 50vw; border-radius: 25px;">
-    <div style="overflow: scroll; height: 50vh; width: 50vw;" id="chatId">
-
-    </div>
-
-        <div style="width: 50vw;">
-            <input autofocus="autofocus" id="textFieldId" type="text" style="width: 39.5vw;" placeholder="Your message">
-            <button onclick="addMessage()" style="width: 10vw;">send</button>
-        </div>
-    <form action="{% url 'users:chat' %}" method="post" enctype="multipart/form-data"></form>
-</div></div></div>
 
 
 <script>
@@ -68,8 +128,14 @@
     document.getElementById("textFieldId").focus();
 
     names['data'] = textInput;
-    console.log('{{ urlAdress }}/user/addMessage/' + names['userAddress'] + '/' + names['data']);
-    fetch('{{ urlAdress }}/user/addMessage/' + names['userAddress'] + '/' + names['data'], {
+    console.log(String(window.location.href).slice(0, -5) + 'addMessage/' + names['userAddress'] + '/' + names['data']);
+    console.log('https://127.0.0.1:8000/user/addMessage/' + names['userAddress'] + '/' + names['data']);
+    console.log(String(window.location.href).slice(0, -5));
+
+    urlByAddress = String(window.location.href).slice(0, -5) + 'addMessage/' + names['userAddress'] + '/' + names['data']
+    // '{{ urlAdress }}/user/addMessage/' + names['userAddress'] + '/' + names['data']
+
+    fetch(urlByAddress, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -96,6 +162,7 @@
 
   function addMessageTextArr(curUser) {
     names['userAddress'] = curUser;
+    console.log(curUser);
     element.innerHTML = "";
        console.log(msgArr.length);
        for (let i = 0; i < msgArr.length; i++){

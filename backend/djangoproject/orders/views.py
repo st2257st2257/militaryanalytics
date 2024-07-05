@@ -8,9 +8,8 @@ from subprocess import check_output
 from django.views.decorators.csrf import csrf_exempt
 
 from orders.models import OrderType, Order, Basket
-
-from users.models import User
-
+from django.contrib.auth.models import User
+# from users.models import User
 from users.views import \
     addIp, ip_save
 

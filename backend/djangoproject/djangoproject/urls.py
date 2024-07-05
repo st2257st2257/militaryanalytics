@@ -35,18 +35,10 @@ from app1.views import index_page, \
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index_page, name='indexPage'),
-    path('news/', index_news),
-    path('get/', index_get),
-    path('set/', index_set),
-    path('checkSettings/', index_checkSettings),
-    path('upload_photo/', upload_photo),
-    path('upload_file/', upload_file),
-    path('get_file/', get_file),
     path('wallet/', index_wallet, name='indexWallet'),
     path('order/', include('orders.urls', namespace='orders')),
     path('form/add/<str:title>/<str:data>/', form_add, name='form_add'),
     path('form/email/<str:title>/<str:name>/<str:email>/<str:phone>/<str:company>/<str:message>', form_email, name='form_add'),
-    path('products/', include('products.urls', namespace='products')),
     path('user/', include('users.urls', namespace='users')),
     path('sitedata/', include('sitedata.urls', namespace='sitedata')),
 ]

@@ -10,7 +10,7 @@ from app1.config import \
     proof_email, \
     getRandomCode
 from app1.models import News
-from users.models import User, Chat, Message
+from users.models import Chat, Message, User
 
 from app1.models import Worker, Post, CustomForm, EmailForm, UserFile
 

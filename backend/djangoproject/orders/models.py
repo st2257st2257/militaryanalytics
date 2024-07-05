@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib import admin
 from users.models import User
 
 # Create your models here.
@@ -51,3 +51,9 @@ class Basket(models.Model):
 
     def sum(self):
         return self.product.averagePrice * self.quantity
+
+
+@admin.register(Basket)
+class DroneHubAdmin(admin.ModelAdmin):
+    search_fields = ("id", "user", "product", "quantity", "created_timestamp", )
+    list_display = ("id", "user", "product", "quantity", "created_timestamp")

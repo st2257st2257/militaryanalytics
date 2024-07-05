@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app1',
-    'products',
     'users',
     'orders',
     'sitedata',
@@ -164,6 +163,7 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
 
+# AUTH_USER_MODEL = "users.User"
 
 #if os.getenv('DJANGO_ENABLE_SSL', 'False') == 'True':
 #    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

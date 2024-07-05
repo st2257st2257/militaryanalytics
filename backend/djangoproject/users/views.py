@@ -10,10 +10,9 @@ from django.shortcuts import render
 from django.contrib import auth, messages
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
-
-from products.models import Product, Commodity, Service, DroneHub
-
-from users.models import User, Chat, Message, getToken, IpData, TgUser
+from app1.config import urlAdress, urlAddressGlobal
+from users.models import Chat, Message, getToken, IpData, TgUser
+from django.contrib.auth.models import User
 from app1.views import \
     sendEmail, \
     sendEmailRecovery, \
@@ -130,53 +129,64 @@ def index_send_email(request):
     return render(request, 'form/index_send_email.html')
 
 
-@csrf_exempt
+@ip_save
+@login_required
 def index_chat(request):
     if request.method == 'POST':
-        actionType = request.POST['actionType']
-        token = request.POST['token']
-        flag = len(User.objects.filter(token=token))
-        if flag == 1:
-            if actionType == "createChat":
-                first_user_login = request.POST['firstUserLogin']
-                second_user_login = request.POST['secondUserLogin']
-                return JsonResponse(create_chat(
-                    first_user_login,
-                    second_user_login))
-            elif actionType == "getChats":
-                first_user_login = request.POST['firstUserLogin']
-                return JsonResponse(get_chats(
-                    first_user_login))
-            elif actionType == "getChatMessages":
-                chat_id = int(request.POST['chatId'])
-                return JsonResponse(get_chat_messages(
-                    chat_id))
-            elif actionType == "sendMessage":
-                first_user_login = request.POST['firstUserLogin']
-                chat_id = int(request.POST['chatId'])
-                text = request.POST['text']
-                return JsonResponse(send_message(
-                    first_user_login,
-                    chat_id,
-                    text,
-                    request.FILES))
-            elif actionType == "readMessage":
-                first_user_login = request.POST['firstUserLogin']
-                message_id = int(request.POST['messageId'])
-                read_message(
-                    first_user_login,
-                    message_id)
-                return JsonResponse({"result": True})
-            elif actionType == "readChat":
-                first_user_login = request.POST['firstUserLogin']
-                chat_id = int(request.POST['chatId'])
-                read_chat(
-                    first_user_login,
-                    chat_id)
-                return JsonResponse({"result": True})
-        else:
-            return JsonResponse({"result": dictStatus.get(132)})
-    return render(request, 'message/index.html')
+        form = UserAddChatForm(data=request.POST)
+        if 'second_user_login' in request.POST.keys():
+            print(request.POST)
+            second_user_login = request.POST['second_user_login']
+            filterSecond = User.objects.filter(username=second_user_login)
+            title = ''
+            if 'title' in request.POST.keys():
+                title = request.POST['title']
+            print()
+            if len(filterSecond) == 1 and \
+                    len(Chat.objects.filter(firstUserLogin=second_user_login,
+                                            title=title)) == 0 and \
+                    len(Chat.objects.filter(secondUserLogin=second_user_login,
+                                            title=title)) == 0:
+                secondUser = User.objects.get(username=second_user_login)
+                newChat = Chat(firstUser=request.user,
+                               secondUser=secondUser,
+                               title=title,
+                               visibility=1)
+                newChat.save()
+    chatList = list(Chat.objects.filter(firstUser=request.user)) + \
+               list(Chat.objects.filter(secondUser=request.user))
+
+    messageListStr = "["
+    firstUserAddress = ""
+
+    for chat in chatList:
+        messages = Message.objects.filter(chat=chat)
+        for message in messages:
+            chatUserName = ""
+            if chat.secondUser == request.user:
+                chatUserName = chat.firstUser.username
+                firstUserAddress = chatUserName
+            else:
+                chatUserName = chat.secondUser.username
+                firstUserAddress = chatUserName
+            res = "['"
+            if message.owner == request.user:
+                res += str(message.owner.username + "', '" + chatUserName + "', 0, '")
+            else:
+                res += str(message.owner.username + "', '" + chatUserName + "', 1, '")
+            res += str(message.text + "', '" + message.date.strftime("%B %d, %Y") + "'],")
+            messageListStr += res
+
+    print("messageList ", messageListStr)
+    print("+-+-===", urlAdress)
+    context = {'form': UserAddChatForm(),
+               'chatList': chatList,
+               'messageList': messageListStr + "]",
+               'currentUserName': request.user.username,
+               'firstUserAddress': firstUserAddress,
+               'urlAdress': urlAddressGlobal}
+    print(context)
+    return render(request, 'users/chat.html', context)
 
 
 @csrf_exempt
@@ -249,13 +259,13 @@ def profile(request):
             print(form.errors)
     else:
         form = UserProfileForm(instance=request.user)
-    print("+++=== ", request.user)
-    baskets = Basket.objects.filter(user=request.user)
+    # baskets = Basket.objects.filter(user=request.user)
 
     context = {'form': form,
-               'baskets': baskets,
-               'volume': request.user.walletVolume / 10 ** 6,
-               'address': request.user.walletAddress
+               # 'baskets': baskets,
+               'baskets': Basket.objects.all(),
+               'volume': 123,#request.user.walletVolume / 10 ** 6,
+               'address': "jksdlknsaldvknadksv"#request.user.walletAddress
                }
     return render(request,
                   'users/profile.html',
@@ -282,7 +292,30 @@ def chat(request):
 @ip_save
 @login_required
 def addMessage(request, chatAddress, value):
+    # http://46.138.245.249:5070/user/addMessage/st2257/a!!!!ascasc/
+    user_addressee = User.objects.get(username=chatAddress)
+    print("---------------------------------------------", chatAddress)
+    print("---------------------------------------------", request.user.username)
+    print("---------------------------------------------", len(Chat.objects.filter(firstUser=user_addressee,
+                                                                                   secondUser=request.user)))
+    if len(Chat.objects.filter(firstUser=user_addressee,
+                               secondUser=request.user)) == 1:
+        chat = Chat.objects.get(firstUser=user_addressee,
+                                secondUser=request.user)
+        messages = Message(chat=chat,
+                           owner=request.user,
+                           text=value)
+        messages.save()
+    elif len(Chat.objects.filter(secondUser=user_addressee,
+                                 firstUser=request.user)) == 1:
+        chat = Chat.objects.get(secondUser=user_addressee,
+                                firstUser=request.user)
+        messages = Message(chat=chat,
+                           owner=request.user,
+                           text=value)
+        messages.save()
     return HttpResponseRedirect('/')
+
 
 @csrf_exempt
 @ip_save
@@ -307,12 +340,12 @@ def index_wallet(request):
     else:
         form = UserProfileForm(instance=request.user)
 
-    request.user.walletVolume = int(float(9876543) * 1000000)
-    request.user.walletAddress = "skbvskdbvkb3k2j3bj34k234fjb2b2kdvvd"
-    request.user.save()
+    request.user.data.walletVolume = int(float(9876543) * 1000000)
+    request.user.data.walletAddress = "skbvskdbvkb3k2j3bj34k234fjb2b2kdvvd"
+    request.user.data.save()
     context = {'form': form,
-               'volume': request.user.walletVolume / 10 ** 6,
-               'address': request.user.walletAddress
+               'volume': request.user.data.walletVolume / 10 ** 6,
+               'address': request.user.data.walletAddress
                }
     return render(request,
                   'users/wallet.html',
