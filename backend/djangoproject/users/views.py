@@ -45,6 +45,7 @@ from users.forms import \
     UserProfileForm, \
     UserAddChatForm
 from orders.models import Basket
+from users.models import Data
 
 
 def get_client_ip(request):
@@ -242,12 +243,24 @@ def login(request):
     return render(request, 'users/login.html', context)
 
 
-
-
-
 @csrf_exempt
 def registration(request):
-    return render(request)
+    if request.method == 'POST':
+        form = UserRegistrationForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Успешная регистрация')
+            print(request.POST.keys())
+            user = User.objects.get(username=request.POST['username'])
+            data = Data(user=user,
+                        walletVolume=0,
+                        walletAddress="")
+            data.save()
+            return HttpResponseRedirect('/')
+    else:
+        form = UserRegistrationForm()
+    context = {'form': form}
+    return render(request, 'users/registration.html', context)
 
 
 @ip_save

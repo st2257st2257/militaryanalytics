@@ -17,6 +17,18 @@ services:
       - "80:8000"
     volumes:
       - ../backend/djangoproject:/usr/src/app
+    depends_on:
+      - pgdb
+
+  pgdb:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=wacze000
+    container_name: naletay_pgdb_v1
+    volumes:
+      - pgdbdata:/var/lib/postgresql/data/
 
   telega:
     build:

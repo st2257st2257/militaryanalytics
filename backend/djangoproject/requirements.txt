@@ -12,3 +12,5 @@ django-sslserver==0.22
 gunicorn
 xlsxwriter
 pytils
+psycopg2-binary
+psycopg2

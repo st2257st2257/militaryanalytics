@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'sitedata',
     'corsheaders',
     'sslserver',
+    'django.contrib.postgres',
 ]
 
 MIDDLEWARE = [
@@ -90,13 +91,36 @@ WSGI_APPLICATION = 'djangoproject.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+"""
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',   # Используется PostgreSQL
+        'NAME': 'postgres', # Имя базы данных
+        'USER': 'postgres', # Имя пользователя
+        'PASSWORD': 'wacze000', # Пароль пользователя
+        'HOST': 'localhost', # Наименование контейнера для базы данных в Docker Compose
+        'PORT': '5433',  # Порт базы данных
+    }
+}
+
+"""DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "OPTIONS": {
+            "service": "my_service",
+            "passfile": ".my_pgpass",
+        },
+    }
+}"""
+
 
 
 # Password validation
