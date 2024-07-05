@@ -181,7 +181,7 @@ host = socket.gethostbyname(socket.gethostname())
 urlAdress = "https://" + host + ":50" + str(host)[-2:]
 urlAddressGlobal = ""
 codeIP = str(host)[-2:]
-if int(codeIP) < 10:
+if int(1000) < 10:
     urlAddressGlobal = "https://proreef.ru:8000"
 else:
     if deploy:
