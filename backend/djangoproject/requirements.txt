@@ -11,5 +11,4 @@ pandas==2.2.2
 django-sslserver==0.22
 gunicorn
 xlsxwriter
-pytils
 psycopg2==2.8.6
