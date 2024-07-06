@@ -5,3 +5,4 @@
 **/*.tmp
 
 # /backend/djangoproject/db.sqlite3
+/backend/djangoproject/pgdb
