@@ -22,6 +22,8 @@ services:
 
   pgdb:
     image: postgres:latest
+    networks:
+      - naletay
     ports:
       - "5432:5432"
     environment:
