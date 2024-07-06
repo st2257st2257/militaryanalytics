@@ -28,7 +28,7 @@ services:
       - POSTGRES_PASSWORD=wacze000
     container_name: naletay_pgdb_v1
     volumes:
-      - pgdbdata:/var/lib/postgresql/data/
+      - ../backend/djangoproject:/var/lib/postgresql/data/
 
   telega:
     build:
