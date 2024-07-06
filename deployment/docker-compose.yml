@@ -18,7 +18,8 @@ services:
     volumes:
       - ../backend/djangoproject:/usr/src/app
     depends_on:
-      - pgdb
+        pgdb:
+            condition: service_healthy
 
   pgdb:
     image: postgres:latest
@@ -30,6 +31,11 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=wacze000
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
     container_name: pgdb
     volumes:
       - ../backend/djangoproject/pgdb:/var/lib/postgresql/data/
