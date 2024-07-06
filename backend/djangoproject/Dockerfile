@@ -5,6 +5,7 @@ RUN apk add g++ postgresql-dev cargo gcc python3-dev libffi-dev musl-dev zlib-de
 COPY requirements.txt ./
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install psycopg2-binary
 
 COPY . .
 
