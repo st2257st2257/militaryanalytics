@@ -22,15 +22,13 @@ services:
 
   pgdb:
     image: postgres:latest
-    ports:
-      - "5430:5432"
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=wacze000
-    container_name: naletay_pgdb_v1
+    container_name: pgdb
     volumes:
-      - ../backend/djangoproject:/var/lib/postgresql/data/
+      - ../backend/djangoproject/pgdb:/var/lib/postgresql/data/
 
   telega:
     build:
