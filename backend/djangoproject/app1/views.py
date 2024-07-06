@@ -13,7 +13,7 @@ import xlrd, xlwt
 from users.models import Chat, Message
 """User"""
 from users.models import getToken
-
+from django.contrib.auth.models import User
 from app1.models import Worker, Post, CustomForm, EmailForm, UserFile
 from app1.models import News
 from app1.models import getToken
@@ -82,6 +82,16 @@ def index_page(request):
 
     print("All: ", all_workers)
     print("Filter: ", filter_workers)
+    
+    # Create default user
+    # user = User.objects.create_superuser(
+    #     email="kristal.as@phystech.edu",
+    #     password="wacze000",
+    #     username="supadmin",
+    # )
+    # user.is_admin = True
+    # user.is_staff = True
+    # user.save()
 
     # send_db_mail('welcome-notification', "kristal.as@phystech.edu", {"data": 5})
     # send_email(password_recovery_title,
