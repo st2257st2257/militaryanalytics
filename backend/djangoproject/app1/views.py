@@ -44,7 +44,9 @@ from app1.services import \
     get_file_by_name, \
     get_file_by_type, \
     get_file_by_class, \
-    get_news
+    get_news, \
+    create_user, \
+    create_super_user
 
 
 def sendEmailRecovery(title, text, address, code):
@@ -65,6 +67,20 @@ def sendRegProofEmail(user):
     title = proof_email_title
     text = proof_email + getRandomCode(9)
     send_email(title, text, user.email)
+
+
+@csrf_exempt
+def index_make_default(request):
+    res = {}
+
+    # Create default user
+    res["Admin login"] = create_super_user("supadmin", "wacze000", "kristal.as@phystech.edu")
+
+    # Create base users
+    res["user1"] = create_user("user1", "pass1", "user1@militarybet.com")
+    res["user2"] = create_user("user2", "pass2", "user2@militarybet.com")
+    res["user3"] = create_user("user3", "pass3", "user3@militarybet.com")
+    return JsonResponse(res)
 
 
 @csrf_exempt
