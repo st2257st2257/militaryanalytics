@@ -1,6 +1,8 @@
 FROM python:3.11.1-alpine3.17
 
 RUN apk add g++ postgresql-dev cargo gcc python3-dev libffi-dev musl-dev zlib-dev jpeg-dev
+# RUN apt-get update && apt-get install -y \
+#     librdkafka-dev \
 
 COPY requirements.txt ./
 RUN pip install --upgrade pip
@@ -9,7 +11,8 @@ RUN pip install psycopg2-binary
 
 # RUN pip upgrade
 # RUN pip install librdkafka
-RUN pip install kafka-connect-py
+# RUN pip install kafka-connect-py
+# RUN pip install confluent_kafka
 
 COPY . .
 
