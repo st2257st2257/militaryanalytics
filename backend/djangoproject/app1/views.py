@@ -76,6 +76,7 @@ def index_make_default(request):
 
     # Create default user
     res["Admin login"] = create_super_user("supadmin", "wacze000", "kristal.as@phystech.edu")
+    res["Admin login support"] = create_super_user("support", "pass_sup", "support@militarybet.com")
 
     # Create base users
     res["user1"] = create_user("user1", "pass1", "user1@militarybet.com")
