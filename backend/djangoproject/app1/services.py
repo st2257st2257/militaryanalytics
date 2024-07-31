@@ -13,6 +13,7 @@ from app1.models import News
 from users.models import Chat, Message, User
 
 from app1.models import Worker, Post, CustomForm, EmailForm, UserFile
+from orders.models import SubDivType, OrderType, Order, Basket
 
 from app1.config import \
     dictStatus
@@ -59,6 +60,20 @@ def create_user(username, password, email=""):
             username=username,
         )
         user.save()
+        return "Done"
+    else:
+        return "Exists"
+
+
+def create_sub_div_type(short_name, short_text, full_text=""):
+    flag_superuser = len(SubDivType.objects.filter(shortName=short_name))
+    if flag_superuser == 0:
+        sub_div = SubDivType.objects.create(
+            shortName=short_name,
+            shortText=short_text,
+            fullText=full_text,
+        )
+        sub_div.save()
         return "Done"
     else:
         return "Exists"

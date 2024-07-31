@@ -177,6 +177,10 @@ mainMenu = "Вы перенесены в главное меню\n" \
            "🪪 /account Личные данные\n" \
            "📨 /reg Обновление данных"
 
+full_rus_uk_text = "On 24 February 2022, Russia invaded Ukraine in a major escalation of the Russo-Ukrainian War, which started in 2014. The invasion, the largest conflict in Europe since World War II,[12][13][14] has caused hundreds of thousands of military casualties and tens of thousands of Ukrainian civilian casualties. As of 2024, Russian troops are occupying about 20% of Ukraine. From a population of 41 million, about 8 million Ukrainians had been internally displaced and more than 8.2 million had fled the country by April 2023, creating Europe's largest refugee crisis since World War II."
+
+full_is_hum_text = "An armed conflict between Israel and Hamas-led Palestinian militant groups[y] has been taking place chiefly in the Gaza Strip and southern Israel since 7 October 2023. The fifth war of the Gaza–Israel conflict since 2008, it has been the deadliest for Palestinians in the entire Israeli–Palestinian conflict,[112] and the most significant military engagement in the region since the 1973 Yom Kippur War."
+
 host = socket.gethostbyname(socket.gethostname())
 urlAdress = "https://" + host + ":50" + str(host)[-2:]
 urlAddressGlobal = ""
