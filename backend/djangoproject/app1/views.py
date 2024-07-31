@@ -26,7 +26,8 @@ from app1.config import \
     password_recovery_title, \
     proof_email_title, \
     proof_email, \
-    getRandomCode
+    getRandomCode, \
+    full_rus_uk_text, full_is_hum_text
 
 from app1.config import \
     dictStatus
@@ -46,7 +47,7 @@ from app1.services import \
     get_file_by_class, \
     get_news, \
     create_user, \
-    create_super_user
+    create_super_user, create_sub_div_type
 
 
 def sendEmailRecovery(title, text, address, code):
@@ -80,6 +81,18 @@ def index_make_default(request):
     res["user1"] = create_user("user1", "pass1", "user1@militarybet.com")
     res["user2"] = create_user("user2", "pass2", "user2@militarybet.com")
     res["user3"] = create_user("user3", "pass3", "user3@militarybet.com")
+
+    # Create sub div type
+    res["uk_rus"] = create_sub_div_type(
+        "Russian-Ukrain conflict",
+        "Conflict in the middle of west Europe",
+        full_rus_uk_text)
+
+    res["is_hum"] = create_sub_div_type(
+        "Israel–Hamas war",
+        "Conflict in the middle East",
+        full_is_hum_text)
+
     return JsonResponse(res)
 
 
