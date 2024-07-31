@@ -7,6 +7,10 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install psycopg2-binary
 
+# RUN pip upgrade
+# RUN pip install librdkafka
+RUN pip install kafka-connect-py
+
 COPY . .
 
 EXPOSE 8000
