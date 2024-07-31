@@ -34,6 +34,36 @@ def send_email(title, text, address):
     )
 
 
+def create_super_user(username, password, email=""):
+    flag_superuser = len(User.objects.filter(username=username))
+    if flag_superuser == 0:
+        user = User.objects.create_superuser(
+            email=email,
+            password=password,
+            username=username,
+        )
+        user.is_admin = True
+        user.is_staff = True
+        user.save()
+        return "Done"
+    else:
+        return "Exists"
+
+
+def create_user(username, password, email=""):
+    flag_superuser = len(User.objects.filter(username=username))
+    if flag_superuser == 0:
+        user = User.objects.create_user(
+            email=email,
+            password=password,
+            username=username,
+        )
+        user.save()
+        return "Done"
+    else:
+        return "Exists"
+
+
 def send_reg_proof_email(user):
     title = proof_email_title
     text = proof_email + getRandomCode(9)
