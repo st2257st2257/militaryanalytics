@@ -9,7 +9,7 @@ from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 import xlrd, xlwt
-
+from orders.models import SubDivType, OrderType, Order, Basket
 from users.models import Chat, Message
 """User"""
 from users.models import getToken
@@ -47,7 +47,9 @@ from app1.services import \
     get_file_by_class, \
     get_news, \
     create_user, \
-    create_super_user, create_sub_div_type
+    create_super_user, \
+    create_sub_div_type, \
+    create_order_type
 
 
 def sendEmailRecovery(title, text, address, code):
@@ -93,6 +95,21 @@ def index_make_default(request):
         "Israel–Hamas war",
         "Conflict in the middle East",
         full_is_hum_text)
+
+    # Create Order Type
+    uk_rus = SubDivType.objects.get(id=1)
+    res["Ukraine lose"] = create_order_type(
+        sub_div_type=uk_rus,
+        short_name="Ukraine lose",
+        short_text=uk_rus.shortText,
+        full_text=uk_rus.fullText,
+        price=1000)
+    res["Russia win"] = create_order_type(
+        sub_div_type=uk_rus,
+        short_name="Russia win",
+        short_text=uk_rus.shortText,
+        full_text=uk_rus.fullText,
+        price=2000)
 
     return JsonResponse(res)
 

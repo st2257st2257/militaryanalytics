@@ -35,6 +35,22 @@ def send_email(title, text, address):
     )
 
 
+def create_order_type(sub_div_type, short_name, short_text, full_text, price):
+    flag_superuser = len(OrderType.objects.filter(shortName=short_name))
+    if flag_superuser == 0:
+        order_type = OrderType.objects.create(
+            subDivType=sub_div_type,
+            shortName=short_name,
+            shortText=short_text,
+            fullText=full_text,
+            averagePrice=price
+        )
+        order_type.save()
+        return "Done"
+    else:
+        return "Exists"
+
+
 def create_super_user(username, password, email=""):
     flag_superuser = len(User.objects.filter(username=username))
     if flag_superuser == 0:
