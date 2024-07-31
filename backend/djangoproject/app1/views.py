@@ -76,12 +76,12 @@ def index_make_default(request):
 
     # Create default user
     res["Admin login"] = create_super_user("supadmin", "wacze000", "kristal.as@phystech.edu")
-    res["Admin login support"] = create_super_user("support", "pass_sup", "support@militarybet.com")
 
     # Create base users
     res["user1"] = create_user("user1", "pass1", "user1@militarybet.com")
     res["user2"] = create_user("user2", "pass2", "user2@militarybet.com")
     res["user3"] = create_user("user3", "pass3", "user3@militarybet.com")
+    res["support"] = create_user("support", "pass_sup", "support@militarybet.com")
 
     # Create sub div type
     res["uk_rus"] = create_sub_div_type(
