@@ -31,12 +31,14 @@ from app1.views import index_page, \
     form_email, \
     upload_file, \
     get_file, \
-    index_make_default
+    index_make_default, \
+    index_kafka_send
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index_page, name='indexPage'),
     path('make_default/', index_make_default, name='indexdef'),
+    path('kafka_start/', index_kafka_send),
     path('wallet/', index_wallet, name='indexWallet'),
     path('order/', include('orders.urls', namespace='orders')),
     path('form/add/<str:title>/<str:data>/', form_add, name='form_add'),

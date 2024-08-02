@@ -1,43 +1,35 @@
-from confluent_kafka import Consumer, KafkaException, KafkaError
-import sys
-import logging
+# transactions_backend.py
 
-def create_consumer(config):
-    consumer = Consumer(config)
+import json
+import time
+from kafka import KafkaConsumer, KafkaProducer
 
-    def basic_consume_loop(topics):
-        try:
-            # подписываемся на топик
-            consumer.subscribe(topics)
+OERDER_KAFKA_TOPIC = 'light_new'
+ORDER_CONFIRMED_KAFKA_TOPIC = 'order_confirmed'
+# KAFKA_SERVER_ADDRESS = 'localhost:9092'
+KAFKA_SERVER_ADDRESS = 'broker:19091'
+# KAFKA_SERVER_ADDRESS = '47.93.191.241:29093`
 
-            while True:
-                msg = consumer.poll(timeout=1.0)
-                if msg is None: continue
-                if msg.error():
-                    if msg.error().code() == KafkaError._PARTITION_EOF:
-                        sys.stderr.write('%% %s [%d] reached end at offset %d\n' %
-                                        (msg.topic(), msg.partition(), msg.offset()))
-                    elif msg.error():
-                        raise KafkaException(msg.error())
-                else:
-                    print(f"Received message: {msg.value().decode('utf-8')}")
-        except KeyboardInterrupt:
-            pass
-        finally:
-            consumer.close()
+consumer = KafkaConsumer(OERDER_KAFKA_TOPIC, bootstrap_servers=[KAFKA_SERVER_ADDRESS], security_protocol="PLAINTEXT",
+                            value_deserializer=lambda x: json.loads(x.decode('utf-8')))
+producer = KafkaProducer(bootstrap_servers=[KAFKA_SERVER_ADDRESS], security_protocol="PLAINTEXT",
+                            value_serializer=lambda x: json.dumps(x).encode('utf-8'))
 
-    return basic_consume_loop
-
-def main():
-    kafka_config = {
-        'bootstrap.servers': 'localhost:9091',
-        'group.id': 'mygroup',
-        'auto.offset.reset': 'earliest'
-    }
-
-    consumer_loop = create_consumer(kafka_config)
-    consumer_loop(['light'])
-
-if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO)
-    main()
+while True:
+    for message in consumer:
+        print("Received order details: {}".format(message.value))
+        user_id = message.value['user_id']
+        order_id = message.value['order_id']
+        user_email = message.value['user_email']
+        order_details = message.value['order_details']
+        time = message.value['time']
+        ## do some suff on the order and check the confirmation
+        order_confirmed = {}
+        order_confirmed['user_id'] = user_id
+        order_confirmed['order_id'] = order_id
+        order_confirmed['user_email'] = user_email
+        order_confirmed['order_details'] = order_details
+        order_confirmed['time'] = time
+        order_confirmed['status'] = 'confirmed'
+        producer.send(ORDER_CONFIRMED_KAFKA_TOPIC, order_confirmed)
+        print("Sent order details {} to kafka topic: {}".format(order_confirmed, ORDER_CONFIRMED_KAFKA_TOPIC))

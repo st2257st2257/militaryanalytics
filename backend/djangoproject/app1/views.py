@@ -21,6 +21,11 @@ from django.http import JsonResponse
 from django.core.mail import send_mail
 import datetime
 
+from kafka import KafkaConsumer, KafkaProducer
+
+import json
+import time
+
 from app1.config import \
     password_recovery, \
     password_recovery_title, \
@@ -70,6 +75,33 @@ def sendRegProofEmail(user):
     title = proof_email_title
     text = proof_email + getRandomCode(9)
     send_email(title, text, user.email)
+
+
+@csrf_exempt
+def index_kafka_send(request):
+    OERDER_KAFKA_TOPIC = 'light_new'
+    ORDER_CONFIRMED_KAFKA_TOPIC = 'light'
+    KAFKA_SERVER_ADDRESS = 'kafka1:19091'
+    # KAFKA_SERVER_ADDRESS = 'broker:19091'
+
+    consumer = KafkaConsumer(
+        OERDER_KAFKA_TOPIC,
+        bootstrap_servers=[KAFKA_SERVER_ADDRESS],
+        security_protocol="PLAINTEXT",
+        value_deserializer=lambda x: json.loads(x.decode('utf-8')))
+    producer = KafkaProducer(
+        bootstrap_servers=[KAFKA_SERVER_ADDRESS],
+        security_protocol="PLAINTEXT",
+        value_serializer=lambda x: json.dumps(x).encode('utf-8'))
+
+    while True:
+        for message in consumer:
+            print("Received order details: {}".format(message.value))
+            order_confirmed = {}
+            order_confirmed['status'] = 'confirmed'
+            producer.send(ORDER_CONFIRMED_KAFKA_TOPIC, order_confirmed)
+
+    return JsonResponse({"result": True})
 
 
 @csrf_exempt
