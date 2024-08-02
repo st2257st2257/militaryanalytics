@@ -79,28 +79,14 @@ def sendRegProofEmail(user):
 
 @csrf_exempt
 def index_kafka_send(request):
-    OERDER_KAFKA_TOPIC = 'light_new'
-    ORDER_CONFIRMED_KAFKA_TOPIC = 'light'
-    KAFKA_SERVER_ADDRESS = 'kafka1:19091'
-    # KAFKA_SERVER_ADDRESS = 'broker:19091'
-
-    consumer = KafkaConsumer(
-        OERDER_KAFKA_TOPIC,
-        bootstrap_servers=[KAFKA_SERVER_ADDRESS],
-        security_protocol="PLAINTEXT",
-        value_deserializer=lambda x: json.loads(x.decode('utf-8')))
     producer = KafkaProducer(
-        bootstrap_servers=[KAFKA_SERVER_ADDRESS],
-        security_protocol="PLAINTEXT",
-        value_serializer=lambda x: json.dumps(x).encode('utf-8'))
+        bootstrap_servers="localhost:9092"
+    )
 
-    while True:
-        for message in consumer:
-            print("Received order details: {}".format(message.value))
-            order_confirmed = {}
-            order_confirmed['status'] = 'confirmed'
-            producer.send(ORDER_CONFIRMED_KAFKA_TOPIC, order_confirmed)
+    topic = "light_new"
+    producer.send(topic, 'Hello Kafka World1234!')
 
+    print(f"Published message to {topic}")
     return JsonResponse({"result": True})
 
 
