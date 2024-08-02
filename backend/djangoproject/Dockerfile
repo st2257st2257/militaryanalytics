@@ -31,7 +31,12 @@ RUN pip install Pyrebase4
 ## RUN pip install -y python3-dev build-essential librdkafka-dev
 ## RUN pip install confluent_kafka
 
-# instal kafka-python
+RUN apk add --no-cache --virtual .build-deps \
+    gcc \
+    musl-dev \
+    && apk add --no-cache librdkafka-dev
+# RUN pip install confluent-kafka
+# install kafka-python
 RUN pip install kafka-python
 
 

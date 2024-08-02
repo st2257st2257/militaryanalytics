@@ -79,12 +79,15 @@ def sendRegProofEmail(user):
 
 @csrf_exempt
 def index_kafka_send(request):
+    print(9)
     producer = KafkaProducer(
-        bootstrap_servers="localhost:9092"
-    )
+        bootstrap_servers=['127.0.0.1:9092'],
+        api_version=(0, 8, 2)) # (0, 10), (0, 9), (0, 8, 2)
+    print(9)
 
     topic = "light_new"
-    producer.send(topic, 'Hello Kafka World1234!')
+    producer.send(topic, 'Hello Kafka World1234!', key="newnew")
+    producer.flush()
 
     print(f"Published message to {topic}")
     return JsonResponse({"result": True})
