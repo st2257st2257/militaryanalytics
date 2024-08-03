@@ -1,3 +1,0 @@
-# Naletay frontend
-
-Vue
