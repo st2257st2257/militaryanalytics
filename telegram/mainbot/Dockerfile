@@ -1,6 +1,4 @@
-FROM python:3.11.1-alpine3.17
-
-RUN apk add g++ postgresql-dev cargo gcc python3-dev libffi-dev musl-dev zlib-dev jpeg-dev
+FROM python:3.11.1-slim
 
 COPY requirements.txt ./
 RUN pip install --upgrade pip
