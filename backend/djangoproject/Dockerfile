@@ -1,11 +1,47 @@
-FROM python:3.11.1-alpine3.17
+# FROM python:3.11.1-alpine3.17
+# FROM python:3.11.1-bullseye
+# FROM python:3.11.1-buster
+FROM python:3.11.1-slim
 
-RUN apk add g++ postgresql-dev cargo gcc python3-dev libffi-dev musl-dev zlib-dev jpeg-dev
+### RUN apk add g++ postgresql-dev cargo gcc python3-dev libffi-dev musl-dev zlib-dev jpeg-dev
+# RUN apt-get update && apt-get install -y \
+#     librdkafka-dev \
 
 COPY requirements.txt ./
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install psycopg2-binary
+
+# RUN pip upgrade
+# RUN pip install librdkafka
+# RUN pip install kafka-connect-py
+# RUN pip install confluent_kafka
+### RUN apk update && apk add git
+# RUN git clone https://github.com/Microsoft/vcpkg
+# RUN cd vcpkg
+# RUN ./bootstrap-vcpkg.sh
+# RUN vcpkg integrate install
+# RUN vcpkg install librdkafka
+
+# install librdkafka
+ENV LIBRD_VER=1.3.0
+### RUN apk add --no-cache --virtual .make-deps bash make wget git gcc g++ && apk add --no-cache musl-dev zlib-dev openssl zstd-dev pkgconfig libc-dev
+### RUN wget https://github.com/edenhill/librdkafka/archive/v${LIBRD_VER}.tar.gz
+### RUN tar -xvf v${LIBRD_VER}.tar.gz && cd librdkafka-${LIBRD_VER} && ./configure --prefix /usr && make && make install
+
+# install kafka lib for python
+RUN pip install Pyrebase4
+## RUN pip install -y python3-dev build-essential librdkafka-dev
+RUN pip install confluent_kafka
+
+### RUN apk add --no-cache --virtual .build-deps \
+###     gcc \
+###     musl-dev \
+###     && apk add --no-cache librdkafka-dev
+# RUN pip install confluent-kafka
+# install kafka-python
+RUN pip install kafka-python
+
 
 COPY . .
 

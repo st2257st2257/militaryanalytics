@@ -1,25 +1,16 @@
 # @Aleksandr Kristal v0.1.0 || add email
-import os
-from openpyxl import load_workbook
-import urllib
-from io import BytesIO
-import pandas as pd
-import ast
-from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-import xlrd, xlwt
-
-from users.models import Chat, Message
+from orders.models import SubDivType, OrderType, Order, Basket
 """User"""
-from users.models import getToken
-from django.contrib.auth.models import User
 from app1.models import Worker, Post, CustomForm, EmailForm, UserFile
 from app1.models import News
-from app1.models import getToken
 from django.http import JsonResponse
 from django.core.mail import send_mail
 import datetime
+
+from confluent_kafka import Consumer, KafkaError
+
 
 from app1.config import \
     password_recovery, \
@@ -28,9 +19,6 @@ from app1.config import \
     proof_email, \
     getRandomCode, \
     full_rus_uk_text, full_is_hum_text
-
-from app1.config import \
-    dictStatus
 
 from djangoproject.settings import EMAIL_HOST_USER
 
@@ -47,7 +35,12 @@ from app1.services import \
     get_file_by_class, \
     get_news, \
     create_user, \
-    create_super_user, create_sub_div_type
+    create_super_user, \
+    create_sub_div_type, \
+    create_order_type
+
+
+from confluent_kafka import Producer
 
 
 def sendEmailRecovery(title, text, address, code):
@@ -71,6 +64,50 @@ def sendRegProofEmail(user):
 
 
 @csrf_exempt
+def index_kafka_send(request):
+    # localhost:9092 kafka1:19091
+    config = {
+        'bootstrap.servers': 'kafka1:19091',
+        'broker.address.family': 'v4'
+    }
+
+    producer = Producer(config)
+    # producer = Producer({"bootstrap.servers": os.environ.get("KAFKA_BOOTSTRAP", "localhost:9092")})
+    producer.produce(
+        'light_new',
+        value='Hello Kafka Worldbjkjhbkjb!',
+        key="new")
+    producer.flush(30)
+
+    return JsonResponse({"result": True})
+
+
+@csrf_exempt
+def index_kafka_get(request):
+    c = Consumer({
+        'bootstrap.servers': 'kafka1:19091',
+        'group.id': 'counting-group',
+        'enable.auto.commit': True,
+        'session.timeout.ms': 6000,
+        'default.topic.config': {'auto.offset.reset': 'smallest'}
+    })
+
+    c.subscribe(['light_new'])
+    while True:
+        msg = c.poll(0.1)
+        if msg is None:
+            continue
+        elif not msg.error():
+            return JsonResponse({"result": str(msg.value())})
+            # return JsonResponse({"result": msg.value()})
+        elif msg.error().code() == KafkaError._PARTITION_EOF:
+            return JsonResponse({"result": "End of partition reached"})
+        else:
+            return JsonResponse({"result": "Error"})
+    return JsonResponse({"result": False})
+
+
+@csrf_exempt
 def index_make_default(request):
     res = {}
 
@@ -81,6 +118,7 @@ def index_make_default(request):
     res["user1"] = create_user("user1", "pass1", "user1@militarybet.com")
     res["user2"] = create_user("user2", "pass2", "user2@militarybet.com")
     res["user3"] = create_user("user3", "pass3", "user3@militarybet.com")
+    res["support"] = create_user("support", "pass_sup", "support@militarybet.com")
 
     # Create sub div type
     res["uk_rus"] = create_sub_div_type(
@@ -92,6 +130,21 @@ def index_make_default(request):
         "Israel–Hamas war",
         "Conflict in the middle East",
         full_is_hum_text)
+
+    # Create Order Type
+    uk_rus = SubDivType.objects.get(id=1)
+    res["Ukraine lose"] = create_order_type(
+        sub_div_type=uk_rus,
+        short_name="Ukraine lose",
+        short_text=uk_rus.shortText,
+        full_text=uk_rus.fullText,
+        price=1000)
+    res["Russia win"] = create_order_type(
+        sub_div_type=uk_rus,
+        short_name="Russia win",
+        short_text=uk_rus.shortText,
+        full_text=uk_rus.fullText,
+        price=2000)
 
     return JsonResponse(res)
 
@@ -256,3 +309,5 @@ def get_file(request):
             return JsonResponse(get_file_by_class(class_name, owner_login))
     return render(request,
                   'upload_file/index_file_get.html')
+
+
