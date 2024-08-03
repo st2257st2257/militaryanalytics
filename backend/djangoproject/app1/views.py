@@ -1,30 +1,16 @@
 # @Aleksandr Kristal v0.1.0 || add email
-import os
-from openpyxl import load_workbook
-import urllib
-from io import BytesIO
-import pandas as pd
-import ast
-from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-import xlrd, xlwt
 from orders.models import SubDivType, OrderType, Order, Basket
-from users.models import Chat, Message
 """User"""
-from users.models import getToken
-from django.contrib.auth.models import User
 from app1.models import Worker, Post, CustomForm, EmailForm, UserFile
 from app1.models import News
-from app1.models import getToken
 from django.http import JsonResponse
 from django.core.mail import send_mail
 import datetime
 
-from kafka import KafkaConsumer, KafkaProducer
+from confluent_kafka import Consumer, KafkaError
 
-import json
-import time
 
 from app1.config import \
     password_recovery, \
@@ -33,9 +19,6 @@ from app1.config import \
     proof_email, \
     getRandomCode, \
     full_rus_uk_text, full_is_hum_text
-
-from app1.config import \
-    dictStatus
 
 from djangoproject.settings import EMAIL_HOST_USER
 
@@ -97,6 +80,31 @@ def index_kafka_send(request):
     producer.flush(30)
 
     return JsonResponse({"result": True})
+
+
+@csrf_exempt
+def index_kafka_get(request):
+    c = Consumer({
+        'bootstrap.servers': 'kafka1:19091',
+        'group.id': 'counting-group',
+        'enable.auto.commit': True,
+        'session.timeout.ms': 6000,
+        'default.topic.config': {'auto.offset.reset': 'smallest'}
+    })
+
+    c.subscribe(['light_new'])
+    while True:
+        msg = c.poll(0.1)
+        if msg is None:
+            continue
+        elif not msg.error():
+            return JsonResponse({"result": str(msg.value())})
+            # return JsonResponse({"result": msg.value()})
+        elif msg.error().code() == KafkaError._PARTITION_EOF:
+            return JsonResponse({"result": "End of partition reached"})
+        else:
+            return JsonResponse({"result": "Error"})
+    return JsonResponse({"result": False})
 
 
 @csrf_exempt
@@ -301,3 +309,5 @@ def get_file(request):
             return JsonResponse(get_file_by_class(class_name, owner_login))
     return render(request,
                   'upload_file/index_file_get.html')
+
+
