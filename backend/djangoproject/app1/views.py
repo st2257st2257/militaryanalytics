@@ -57,6 +57,9 @@ from app1.services import \
     create_order_type
 
 
+from confluent_kafka import Producer
+
+
 def sendEmailRecovery(title, text, address, code):
     sendEmail(title, text + code, address)
 
@@ -79,17 +82,20 @@ def sendRegProofEmail(user):
 
 @csrf_exempt
 def index_kafka_send(request):
-    print(9)
-    producer = KafkaProducer(
-        bootstrap_servers=['127.0.0.1:9092'],
-        api_version=(0, 8, 2)) # (0, 10), (0, 9), (0, 8, 2)
-    print(9)
+    # localhost:9092 kafka1:19091
+    config = {
+        'bootstrap.servers': 'kafka1:19091',
+        'broker.address.family': 'v4'
+    }
 
-    topic = "light_new"
-    producer.send(topic, 'Hello Kafka World1234!', key="newnew")
-    producer.flush()
+    producer = Producer(config)
+    # producer = Producer({"bootstrap.servers": os.environ.get("KAFKA_BOOTSTRAP", "localhost:9092")})
+    producer.produce(
+        'light_new',
+        value='Hello Kafka Worldbjkjhbkjb!',
+        key="new")
+    producer.flush(30)
 
-    print(f"Published message to {topic}")
     return JsonResponse({"result": True})
 
 
