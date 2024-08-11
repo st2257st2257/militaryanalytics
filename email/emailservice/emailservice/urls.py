@@ -17,6 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from mainemail.views import \
+    index_kafka_send, \
+    index_kafka_get
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('kafka_start/', index_kafka_send),
+    path('kafka_get/', index_kafka_get)
 ]

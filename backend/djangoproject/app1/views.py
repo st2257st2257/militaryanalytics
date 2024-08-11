@@ -75,7 +75,7 @@ def index_kafka_send(request):
     # producer = Producer({"bootstrap.servers": os.environ.get("KAFKA_BOOTSTRAP", "localhost:9092")})
     producer.produce(
         'light_new',
-        value='Hello Kafka Worldbjkjhbkjb!',
+        value='Hello Kafka Worldbjkjhbkjb!431',
         key="new")
     producer.flush(30)
 
@@ -98,7 +98,9 @@ def index_kafka_get(request):
         if msg is None:
             continue
         elif not msg.error():
-            return JsonResponse({"result": str(msg.value())})
+            return JsonResponse({"result": str(msg.value()),
+                                 "topic": msg.topic(),
+                                 "offset": msg.offset()})
             # return JsonResponse({"result": msg.value()})
         elif msg.error().code() == KafkaError._PARTITION_EOF:
             return JsonResponse({"result": "End of partition reached"})
