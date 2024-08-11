@@ -21,6 +21,23 @@ services:
         pgdb:
             condition: service_healthy
 
+  email:
+    build:
+      context: ../email/emailservice/
+      dockerfile: Dockerfile
+    environment:
+      - DJANGO_DEBUG=True
+      - DJANGO_FRONTEND_URL=http://xn--80aaorhk2b.xn--p1ai
+      - DJANGO_BACKEND_URL=http://naletay.shop:8083
+    networks:
+      - naletay
+    image: "naletay/email:v1"
+    container_name: naletay_email_v1
+    ports:
+      - "8083:8083"
+    volumes:
+      - ../email/emailservice:/usr/src/app
+
   pgdb:
     image: postgres:latest
     networks:
