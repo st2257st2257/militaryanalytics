@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_celery_beat',
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -117,6 +119,17 @@ EMAIL_PORT = 465
 EMAIL_HOST_USER = "awesome.gtlk@yandex.com"
 EMAIL_HOST_PASSWORD = "aatoyoihydfqmjrj"
 EMAIL_USE_SSL = True
+
+
+# CELERY
+REDIS_HOST = '0.0.0.0'
+REDIS_PORT = '6379'
+CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 
 
 # Static files (CSS, JavaScript, Images)

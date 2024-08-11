@@ -64,7 +64,7 @@ def sendRegProofEmail(user):
 
 
 @csrf_exempt
-def index_kafka_send(request):
+def index_kafka_send(request, title="light_new", value="", key="new"):
     # localhost:9092 kafka1:19091
     config = {
         'bootstrap.servers': 'kafka1:19091',
@@ -74,9 +74,26 @@ def index_kafka_send(request):
     producer = Producer(config)
     # producer = Producer({"bootstrap.servers": os.environ.get("KAFKA_BOOTSTRAP", "localhost:9092")})
     producer.produce(
-        'light_new',
-        value='Hello Kafka Worldbjkjhbkjb!431',
-        key="new")
+        title,
+        value=value, # 'Hello Kafka Worldbjkjhbkjb!431',
+        key=key)
+    producer.flush(30)
+
+    return JsonResponse({"result": True})
+
+
+def kafka_send_email(title="light_new", value="", key="new"):
+    config = {
+        'bootstrap.servers': 'kafka1:19091',
+        'broker.address.family': 'v4'
+    }
+
+    producer = Producer(config)
+    # producer = Producer({"bootstrap.servers": os.environ.get("KAFKA_BOOTSTRAP", "localhost:9092")})
+    producer.produce(
+        title,
+        value=value, # 'Hello Kafka Worldbjkjhbkjb!431',
+        key=key)
     producer.flush(30)
 
     return JsonResponse({"result": True})

@@ -16,7 +16,8 @@ from django.contrib.auth.models import User
 from app1.views import \
     sendEmail, \
     sendEmailRecovery, \
-    sendRegProofEmail
+    sendRegProofEmail, \
+    kafka_send_email
 from app1.config import \
     password_recovery, \
     password_recovery_title, \
@@ -249,6 +250,7 @@ def registration(request):
         form = UserRegistrationForm(data=request.POST)
         if form.is_valid():
             form.save()
+            kafka_send_email("registration", f"Новая регистрация: {request.POST.get('email', 'xxx')}", "new")
             messages.success(request, 'Успешная регистрация')
             print(request.POST.keys())
             user = User.objects.get(username=request.POST['username'])

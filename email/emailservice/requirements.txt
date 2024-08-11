@@ -15,3 +15,5 @@ xlsxwriter
 # confluent_kafka==1.9.0
 kafka
 Celery
+django_celery_beat
+djangorestframework

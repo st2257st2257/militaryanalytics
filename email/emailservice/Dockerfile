@@ -11,7 +11,8 @@ RUN pip install Pyrebase4
 RUN pip install confluent_kafka
 
 RUN pip install kafka-python
-
+RUN pip install celery
+RUN pip install redis
 
 COPY . .
 
