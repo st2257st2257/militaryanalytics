@@ -19,10 +19,12 @@ from django.urls import path
 
 from mainemail.views import \
     index_kafka_send, \
-    index_kafka_get
+    index_kafka_get, \
+    send_test
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('send_test/', send_test),
     path('kafka_start/', index_kafka_send),
     path('kafka_get/', index_kafka_get)
 ]

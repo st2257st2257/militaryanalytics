@@ -101,7 +101,6 @@ def index_kafka_get(request):
             return JsonResponse({"result": str(msg.value()),
                                  "topic": msg.topic(),
                                  "offset": msg.offset()})
-            # return JsonResponse({"result": msg.value()})
         elif msg.error().code() == KafkaError._PARTITION_EOF:
             return JsonResponse({"result": "End of partition reached"})
         else:

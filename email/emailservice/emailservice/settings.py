@@ -111,6 +111,13 @@ USE_I18N = True
 
 USE_TZ = True
 
+# EMAIL
+EMAIL_HOST = "smtp.yandex.ru"
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "awesome.gtlk@yandex.com"
+EMAIL_HOST_PASSWORD = "aatoyoihydfqmjrj"
+EMAIL_USE_SSL = True
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
